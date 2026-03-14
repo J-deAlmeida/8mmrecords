@@ -217,10 +217,51 @@ async function fetchWL(){
 }
 
 /* --- 8mm check ---
-   8mm uses Common Ground with SSR. The <title> tag contains the actual release
-   title when a release exists, vs generic "8mm Records" or "8mm-records" when it doesn't.
-   We also try the master release versions page on 8mm for better matching.
+   8mm uses Common Ground (SPA). The server renders the <title> tag with
+   the actual release name when the item exists. But cross-origin fetches
+   are blocked by CORS. We use a public CORS proxy to get the HTML and
+   then parse the <title> to detect whether the release exists.
 */
+var PROXY="https://corsproxy.io/?url=";
+
+async function checkOne(it){
+  var url=surl(it.id,it.artist,it.title);
+  var encoded=PROXY+encodeURIComponent(url);
+
+  /* Try proxy fetch */
+  try{
+    var r=await fetch(encoded,{method:"GET"});
+    if(r.ok){
+      var txt=await r.text();
+      var tm=txt.match(/<title[^>]*>([\s\S]*?)<\/title>/i);
+      var pt=tm?tm[1].trim():"";
+      /* A real release page: title is "Artist - Title | Label (Catno)" — long and specific.
+         A missing page returns "8mm Records" or "8mm-records" or similar short default. */
+      if(pt&&pt.length>20&&pt.toLowerCase().indexOf("8mm records")!==0&&pt.toLowerCase().indexOf("8mm-records")!==0){
+        return "found"
+      }
+      return "no"
+    }
+    return "no"
+  }catch(e){}
+
+  /* Fallback: try direct fetch (in case store has CORS) */
+  try{
+    var r2=await fetch(url,{method:"GET",redirect:"follow"});
+    if(r2.ok){
+      var txt2=await r2.text();
+      var tm2=txt2.match(/<title[^>]*>([\s\S]*?)<\/title>/i);
+      var pt2=tm2?tm2[1].trim():"";
+      if(pt2&&pt2.length>20&&pt2.toLowerCase().indexOf("8mm records")!==0&&pt2.toLowerCase().indexOf("8mm-records")!==0){
+        return "found"
+      }
+      return "no"
+    }
+  }catch(e2){}
+
+  return "err"
+}
+
 async function checkAll(){
   S.checking=true;S.cabort=false;
   var items=S.items,tot=items.length,done=0;
@@ -231,35 +272,13 @@ async function checkAll(){
     var it=items[i];
     if(S.cs[it.id]){done++;continue}
 
-    var url=surl(it.id,it.artist,it.title);
-    var found=false,err=false;
-
-    try{
-      var r=await fetch(url,{method:"GET",redirect:"follow"});
-      if(r.ok){
-        var txt=await r.text();
-        /* Extract <title> from SSR HTML */
-        var tm=txt.match(/<title[^>]*>([\s\S]*?)<\/title>/i);
-        var pt=tm?tm[1].trim():"";
-        /* A real release page has artist/title in <title>, not just "8mm Records" */
-        if(pt&&pt.length>15&&pt.toLowerCase().indexOf("8mm records")!==0&&pt.toLowerCase().indexOf("8mm-records")!==0){
-          found=true
-        }
-      }else if(r.status===404){
-        found=false
-      }
-    }catch(e){
-      /* CORS or network error */
-      err=true
-    }
-
-    S.cs[it.id]=found?"found":(err?"err":"no");
+    S.cs[it.id]=await checkOne(it);
 
     done++;
     var fc=0;Object.keys(S.cs).forEach(function(k){if(S.cs[k]==="found")fc++});
     S.cprog={done:done,tot:tot,found:fc};
-    if(done%3===0||i===items.length-1)render();
-    await wait(350)
+    if(done%2===0||i===items.length-1)render();
+    await wait(500)
   }
   S.checking=false;render()
 }
