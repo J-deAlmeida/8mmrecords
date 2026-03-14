@@ -122,7 +122,7 @@ label{display:block;font-size:13px;font-weight:600;color:#333;margin-bottom:6px}
   <div class="header">
     <div class="logo">8mm Records <span>&times;</span> Discogs</div>
     <div class="sub">Check which records from your wantlist are available at 8mm Records</div>
-    <div style="font-size:11px;color:#bbb;margin-top:6px;font-family:monospace">v3.1 &mdash; 2026-03-15 01:00</div>
+    <div style="font-size:11px;color:#bbb;margin-top:6px;font-family:monospace">v3.2 &mdash; 2026-03-15 01:30</div>
   </div>
   <div id="root"></div>
 </div>
@@ -249,6 +249,13 @@ async function checkAll(){
   S.checking=true;S.cabort=false;
   var tot=S.items.length;
   S.cprog={done:0,tot:tot,found:0};render();
+
+  /* Rotate digging phrases on a timer, independent of progress */
+  var digTimer=setInterval(function(){
+    var el=document.getElementById("digmsg");
+    if(el)el.textContent=nextDig()
+  },3500);
+
   var queue=S.items.filter(function(it){return !S.cs[it.id]});
   var done=tot-queue.length;
   while(queue.length>0&&!S.cabort){
@@ -260,10 +267,18 @@ async function checkAll(){
     done+=batch.length;
     var fc=0;Object.keys(S.cs).forEach(function(k){if(S.cs[k]==="found")fc++});
     S.cprog={done:done,tot:tot,found:fc};
-    nextDig();
-    render();
+
+    /* Lightweight DOM update — no full re-render */
+    var ptEl=document.getElementById("chkprog");
+    var pfEl=document.getElementById("chkfill");
+    var stEl=document.getElementById("chkstat");
+    if(ptEl)ptEl.textContent="Checking\u2026 "+done+"/"+tot+" ("+fc+" found)";
+    if(pfEl)pfEl.style.width=(done/Math.max(tot,1)*100)+"%";
+    if(stEl)stEl.querySelector(".stat-n").textContent=fc;
+
     if(queue.length>0&&!S.cabort)await wait(200)
   }
+  clearInterval(digTimer);
   S.checking=false;render()
 }
 
@@ -380,7 +395,7 @@ function render(){
 
   o+='<div class="stats"><div class="stat"><div class="stat-n">'+S.items.length+'</div><div class="stat-l">Wantlist</div></div>'+
     '<div class="stat"><div class="stat-n">'+Object.keys(artc).length+'</div><div class="stat-l">Artists</div></div>';
-  if(hc)o+='<div class="stat"><div class="stat-n green">'+fc+'</div><div class="stat-l">Found at 8mm</div></div>';
+  if(hc)o+='<div class="stat" id="chkstat"><div class="stat-n green">'+fc+'</div><div class="stat-l">Found at 8mm</div></div>';
   o+='</div>';
 
   o+='<div class="check-bar">';
@@ -391,9 +406,9 @@ function render(){
     var cp=S.cprog||{done:0,tot:S.items.length,found:0};
     o+='<button class="btn-sec btn-sm" id="bst">\u25A0 Stop</button>'+
       spinSvg()+
-      '<div class="pw"><div class="progress-text">Checking\u2026 '+cp.done+'/'+cp.tot+' ('+cp.found+' found)</div>'+
-      '<div class="pbar"><div class="pfill pfill-green" style="width:'+(cp.done/Math.max(cp.tot,1)*100)+'%"></div></div>'+
-      '<div class="dig-msg">'+h(DIG_MSGS[digIdx])+'</div></div>'
+      '<div class="pw"><div class="progress-text" id="chkprog">Checking\u2026 '+cp.done+'/'+cp.tot+' ('+cp.found+' found)</div>'+
+      '<div class="pbar"><div class="pfill pfill-green" id="chkfill" style="width:'+(cp.done/Math.max(cp.tot,1)*100)+'%"></div></div>'+
+      '<div class="dig-msg" id="digmsg">'+h(DIG_MSGS[digIdx])+'</div></div>'
   }
   o+='</div>';
 
