@@ -3,15 +3,15 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>8mm Records × Discogs Wantlist Checker</title>
+<title>8mm Records &times; Discogs Wantlist Checker</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
 <style>
 *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
-body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #fafafa; color: #1a1a1a; min-height: 100vh; }
+body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif; background: #fafafa; color: #1a1a1a; min-height: 100vh; }
 a { color: inherit; }
 
-.app { max-width: 900px; margin: 0 auto; padding: 24px 16px 60px; }
+.app { max-width: 960px; margin: 0 auto; padding: 24px 16px 60px; }
 .header { text-align: center; margin-bottom: 32px; }
 .logo { font-size: 28px; font-weight: 800; letter-spacing: -0.5px; color: #111; }
 .logo span { color: #888; font-weight: 400; }
@@ -20,7 +20,6 @@ a { color: inherit; }
 .card { background: #fff; border: 1px solid #e5e5e5; border-radius: 12px; padding: 24px; margin-bottom: 20px; }
 .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
 @media (max-width: 600px) { .form-row { grid-template-columns: 1fr; } }
-
 label { display: block; font-size: 13px; font-weight: 600; color: #333; margin-bottom: 6px; }
 input[type=text], input[type=password] { width: 100%; padding: 10px 12px; border: 1px solid #ddd; border-radius: 8px; font-size: 14px; outline: none; transition: border 0.2s; font-family: inherit; }
 input:focus { border-color: #111; }
@@ -33,49 +32,108 @@ input:focus { border-color: #111; }
 .btn:disabled { background: #999; cursor: not-allowed; }
 .btn-sec { background: #fff; color: #111; border: 1px solid #ddd; border-radius: 8px; padding: 10px 20px; font-size: 13px; font-weight: 600; cursor: pointer; font-family: inherit; transition: all 0.2s; }
 .btn-sec:hover { background: #f5f5f5; }
+.btn-sm { padding: 6px 14px; font-size: 12px; border-radius: 6px; }
+.btn-check { background: #0a7d4f; color: #fff; border: none; border-radius: 8px; padding: 10px 22px; font-size: 13px; font-weight: 600; cursor: pointer; font-family: inherit; }
+.btn-check:hover { background: #096b43; }
+.btn-check:disabled { background: #93c9ae; cursor: not-allowed; }
 
-.progress-wrap { flex: 1; min-width: 200px; }
 .progress-text { font-size: 12px; color: #666; }
 .progress-bar { background: #f0f0f0; border-radius: 4px; height: 6px; overflow: hidden; margin-top: 6px; }
-.progress-fill { height: 100%; background: #111; border-radius: 4px; transition: width 0.3s ease; width: 0; }
+.progress-fill { height: 100%; background: #111; border-radius: 4px; transition: width 0.3s ease; }
+.progress-fill.green { background: #0a7d4f; }
 
 .error { background: #fff5f5; border: 1px solid #fdd; border-radius: 8px; padding: 16px; color: #c00; font-size: 13px; margin-bottom: 16px; }
-.stats { display: flex; gap: 16px; margin-bottom: 20px; flex-wrap: wrap; }
-.stat { background: #fff; border: 1px solid #eee; border-radius: 8px; padding: 12px 18px; flex: 1; min-width: 100px; }
-.stat-num { font-size: 24px; font-weight: 800; color: #111; }
+.stats { display: flex; gap: 12px; margin-bottom: 20px; flex-wrap: wrap; }
+.stat { background: #fff; border: 1px solid #eee; border-radius: 8px; padding: 12px 18px; flex: 1; min-width: 80px; }
+.stat-num { font-size: 22px; font-weight: 800; color: #111; }
+.stat-num.green { color: #0a7d4f; }
 .stat-label { font-size: 11px; color: #888; text-transform: uppercase; letter-spacing: 0.5px; }
 
-.filters { display: flex; gap: 8px; margin-bottom: 16px; flex-wrap: wrap; align-items: center; }
-.search { padding: 8px 12px; border: 1px solid #ddd; border-radius: 8px; font-size: 13px; flex: 1; min-width: 180px; outline: none; font-family: inherit; }
+.toolbar { display: flex; gap: 8px; margin-bottom: 16px; flex-wrap: wrap; align-items: center; }
+.search { padding: 8px 12px; border: 1px solid #ddd; border-radius: 8px; font-size: 13px; flex: 1; min-width: 160px; outline: none; font-family: inherit; }
 .search:focus { border-color: #111; }
 .fbtn { padding: 6px 14px; font-size: 12px; font-weight: 600; border-radius: 6px; border: 1px solid #ddd; cursor: pointer; background: #fff; color: #333; font-family: inherit; transition: all 0.2s; }
 .fbtn:hover { border-color: #999; }
 .fbtn.active { background: #111; color: #fff; border-color: #111; }
+.view-toggle { display: flex; border: 1px solid #ddd; border-radius: 6px; overflow: hidden; margin-left: auto; }
+.vbtn { padding: 6px 10px; border: none; background: #fff; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all 0.2s; }
+.vbtn:not(:last-child) { border-right: 1px solid #ddd; }
+.vbtn.active { background: #111; }
+.vbtn.active svg { stroke: #fff; }
+.vbtn svg { width: 16px; height: 16px; stroke: #666; stroke-width: 2; fill: none; }
 
-.grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 16px; }
-.item { background: #fff; border: 1px solid #e8e8e8; border-radius: 10px; overflow: hidden; transition: box-shadow 0.2s, transform 0.15s; }
-.item:hover { box-shadow: 0 4px 20px rgba(0,0,0,0.08); transform: translateY(-2px); }
-.item-img { width: 100%; aspect-ratio: 1; object-fit: cover; background: #f5f5f5; display: block; }
-.item-placeholder { width: 100%; aspect-ratio: 1; background: #f5f5f5; display: flex; align-items: center; justify-content: center; }
-.item-body { padding: 12px 14px; }
-.item-artist { font-size: 12px; font-weight: 600; color: #666; text-transform: uppercase; letter-spacing: 0.5px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-.item-title { font-size: 14px; font-weight: 700; color: #111; margin-top: 2px; line-height: 1.3; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
-.item-meta { font-size: 11px; color: #888; margin-top: 4px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-.item-links { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 8px; }
-.item-link { display: inline-flex; align-items: center; font-size: 12px; font-weight: 600; color: #111; text-decoration: none; padding: 6px 12px; border: 1px solid #ddd; border-radius: 6px; transition: all 0.2s; background: #fff; }
+/* GRID VIEW */
+.grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 14px; }
+.grid .item { background: #fff; border: 1px solid #e8e8e8; border-radius: 10px; overflow: hidden; transition: box-shadow 0.2s, transform 0.15s; }
+.grid .item:hover { box-shadow: 0 4px 20px rgba(0,0,0,0.08); transform: translateY(-2px); }
+.grid .item-img-wrap { width: 100%; aspect-ratio: 1; overflow: hidden; background: #f5f5f5; position: relative; }
+.grid .item-img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.grid .item-placeholder { width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; background: #f5f5f5; }
+.grid .item-body { padding: 10px 12px; }
+.grid .item-artist { font-size: 11px; font-weight: 600; color: #666; text-transform: uppercase; letter-spacing: 0.5px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.grid .item-title { font-size: 13px; font-weight: 700; color: #111; margin-top: 2px; line-height: 1.3; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+.grid .item-meta { font-size: 10px; color: #888; margin-top: 3px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.grid .item-links { display: flex; gap: 4px; flex-wrap: wrap; margin-top: 6px; }
+.grid .item-status { margin-top: 6px; }
+
+/* LIST VIEW */
+.list .item { background: #fff; border: 1px solid #e8e8e8; border-radius: 8px; display: flex; align-items: center; gap: 14px; padding: 10px 14px; margin-bottom: 8px; transition: box-shadow 0.2s; }
+.list .item:hover { box-shadow: 0 2px 12px rgba(0,0,0,0.06); }
+.list .item-img-wrap { width: 56px; height: 56px; flex-shrink: 0; border-radius: 6px; overflow: hidden; background: #f5f5f5; }
+.list .item-img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.list .item-placeholder { width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; }
+.list .item-placeholder svg { width: 24px; height: 24px; }
+.list .item-body { flex: 1; min-width: 0; }
+.list .item-artist { font-size: 11px; font-weight: 600; color: #666; text-transform: uppercase; letter-spacing: 0.3px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.list .item-title { font-size: 13px; font-weight: 700; color: #111; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.list .item-meta { font-size: 11px; color: #888; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.list .item-links { display: flex; gap: 6px; flex-shrink: 0; align-items: center; }
+.list .item-status { flex-shrink: 0; }
+
+/* COMPACT GRID */
+.compact { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 10px; }
+.compact .item { background: #fff; border: 1px solid #e8e8e8; border-radius: 8px; overflow: hidden; transition: box-shadow 0.2s, transform 0.15s; }
+.compact .item:hover { box-shadow: 0 3px 14px rgba(0,0,0,0.07); transform: translateY(-1px); }
+.compact .item-img-wrap { width: 100%; aspect-ratio: 1; overflow: hidden; background: #f5f5f5; position: relative; }
+.compact .item-img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.compact .item-placeholder { width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; background: #f5f5f5; }
+.compact .item-body { padding: 8px 10px; }
+.compact .item-artist { font-size: 10px; font-weight: 600; color: #666; text-transform: uppercase; letter-spacing: 0.3px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.compact .item-title { font-size: 12px; font-weight: 700; color: #111; margin-top: 1px; line-height: 1.2; display: -webkit-box; -webkit-line-clamp: 1; -webkit-box-orient: vertical; overflow: hidden; }
+.compact .item-meta { display: none; }
+.compact .item-links { display: flex; gap: 4px; margin-top: 4px; }
+.compact .item-status { margin-top: 4px; }
+
+/* Shared link/status styles */
+.item-link { display: inline-flex; align-items: center; font-size: 11px; font-weight: 600; color: #111; text-decoration: none; padding: 4px 10px; border: 1px solid #ddd; border-radius: 5px; transition: all 0.2s; background: #fff; white-space: nowrap; }
 .item-link:hover { background: #111; color: #fff; }
-.item-link.sec { color: #666; border-color: #e5e5e5; }
+.item-link.sec { color: #888; border-color: #eee; }
 .item-link.sec:hover { background: #f5f5f5; color: #333; }
+
+.badge { display: inline-flex; align-items: center; gap: 4px; font-size: 11px; font-weight: 600; padding: 3px 10px; border-radius: 20px; white-space: nowrap; }
+.badge.found { background: #e6f7ee; color: #0a7d4f; }
+.badge.found a { color: #0a7d4f; text-decoration: underline; text-underline-offset: 2px; }
+.badge.notfound { background: #f5f5f5; color: #999; }
+.badge.checking { background: #f0f4ff; color: #5577bb; }
+.badge.error { background: #fff8e6; color: #a68600; }
 
 .empty { text-align: center; padding: 40px; color: #888; }
 .howto { text-align: center; color: #666; font-size: 13px; line-height: 1.7; }
 .howto strong { color: #333; }
 .note { font-size: 12px; color: #999; margin-top: 12px; }
-.loaded-bar { display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; }
+.loaded-bar { display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; flex-wrap: wrap; gap: 10px; }
 .show-more { text-align: center; padding: 20px; }
-.hidden { display: none; }
-
+.check-bar { background: #fff; border: 1px solid #e5e5e5; border-radius: 10px; padding: 14px 18px; margin-bottom: 16px; display: flex; align-items: center; gap: 14px; flex-wrap: wrap; }
+.check-bar .progress-wrap { flex: 1; min-width: 200px; }
 .vinyl-svg { opacity: 0.15; }
+.separator { width: 1px; height: 24px; background: #e5e5e5; }
+
+@media (max-width: 600px) {
+  .grid { grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); }
+  .compact { grid-template-columns: repeat(auto-fill, minmax(120px, 1fr)); }
+  .list .item { flex-wrap: wrap; }
+  .check-bar { flex-direction: column; align-items: stretch; }
+}
 </style>
 </head>
 <body>
@@ -87,123 +145,150 @@ input:focus { border-color: #111; }
   <div id="root"></div>
 </div>
 
-<template id="tpl-vinyl">
-  <svg class="vinyl-svg" width="48" height="48" viewBox="0 0 48 48">
-    <circle cx="24" cy="24" r="22" stroke="#999" stroke-width="2" fill="none"/>
-    <circle cx="24" cy="24" r="8" stroke="#999" stroke-width="2" fill="none"/>
-    <circle cx="24" cy="24" r="2" fill="#999"/>
-  </svg>
-</template>
-
 <script>
 (function() {
   "use strict";
 
   var STORE = "https://www.8mm-records.com";
   var API = "https://api.discogs.com";
-  var PER_PAGE = 50;
+  var PER_PAGE = 60;
   var root = document.getElementById("root");
 
   var state = {
     items: [], loaded: false, loading: false, error: null,
-    progress: null, search: "", format: "all", visCount: PER_PAGE
+    progress: null, search: "", format: "all", visCount: PER_PAGE,
+    view: "grid",
+    checkStatus: {},
+    checking: false, checkProgress: null, checkAbort: false,
+    showOnlyFound: false
   };
 
-  function esc(s) {
-    var d = document.createElement("div");
-    d.textContent = s || "";
-    return d.innerHTML;
-  }
-
-  function slugify(t) {
-    return (t || "").toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/(^-|-$)/g, "");
-  }
-
-  function storeUrl(id, artist, title) {
-    return STORE + "/release/" + id + "/" + slugify(artist + "-" + title);
-  }
-
-  function vinylSVG() {
-    return '<div class="item-placeholder"><svg class="vinyl-svg" width="48" height="48" viewBox="0 0 48 48"><circle cx="24" cy="24" r="22" stroke="#999" stroke-width="2" fill="none"/><circle cx="24" cy="24" r="8" stroke="#999" stroke-width="2" fill="none"/><circle cx="24" cy="24" r="2" fill="#999"/></svg></div>';
-  }
-
+  function esc(s) { var d = document.createElement("div"); d.textContent = s || ""; return d.innerHTML; }
+  function slugify(t) { return (t || "").toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/(^-|-$)/g, ""); }
+  function storeUrl(id, artist, title) { return STORE + "/release/" + id + "/" + slugify(artist + "-" + title); }
   function sleep(ms) { return new Promise(function(r) { setTimeout(r, ms); }); }
 
+  function vinylSVG(size) {
+    var s = size || 40;
+    return '<svg class="vinyl-svg" width="' + s + '" height="' + s + '" viewBox="0 0 48 48"><circle cx="24" cy="24" r="22" stroke="#999" stroke-width="2" fill="none"/><circle cx="24" cy="24" r="8" stroke="#999" stroke-width="2" fill="none"/><circle cx="24" cy="24" r="2" fill="#999"/></svg>';
+  }
+
+  // --- DISCOGS FETCH ---
   async function fetchWantlist(user, token) {
-    state.loading = true;
-    state.error = null;
-    state.items = [];
-    state.loaded = false;
-    state.progress = null;
-    state.visCount = PER_PAGE;
-    state.search = "";
-    state.format = "all";
+    state.loading = true; state.error = null; state.items = []; state.loaded = false;
+    state.progress = null; state.visCount = PER_PAGE; state.search = ""; state.format = "all";
+    state.checkStatus = {}; state.checking = false; state.checkProgress = null; state.showOnlyFound = false;
     render();
 
     var page = 1, all = [], totalPages = 1, total = 0;
-
     try {
       while (page <= totalPages) {
         var headers = { "User-Agent": "8mmWantlistChecker/1.0" };
         if (token) headers["Authorization"] = "Discogs token=" + token;
-
         var url = API + "/users/" + encodeURIComponent(user) + "/wants?per_page=100&page=" + page + "&sort=added&sort_order=desc";
         var res = await fetch(url, { headers: headers });
-
         if (!res.ok) {
           if (res.status === 401) throw new Error("Authentication failed \u2014 check your token.");
           if (res.status === 404) throw new Error("User not found \u2014 check your username.");
           if (res.status === 429) { await sleep(2500); continue; }
           throw new Error("Discogs API error (" + res.status + ")");
         }
-
         var data = await res.json();
         totalPages = (data.pagination && data.pagination.pages) || 1;
         total = (data.pagination && data.pagination.items) || 0;
         all = all.concat(data.wants || []);
-
         state.progress = { loaded: all.length, total: total, page: page, totalPages: totalPages };
         render();
-
         page++;
         if (page <= totalPages) await sleep(1100);
       }
-
       state.items = all.map(function(w) {
         var b = w.basic_information || {};
-        var artists = (b.artists || []).map(function(a) {
-          return a.name.replace(/ \(\d+\)$/, "");
-        });
+        var artists = (b.artists || []).map(function(a) { return a.name.replace(/ \(\d+\)$/, ""); });
         var labels = b.labels || [];
         var formats = (b.formats || []).map(function(f) { return f.name; });
         return {
           id: b.id || w.id,
           artist: artists.join(", ") || "Unknown",
           title: b.title || "",
-          label: labels.length > 0 ? labels[0].name || "" : "",
-          catno: labels.length > 0 ? labels[0].catno || "" : "",
+          label: labels.length > 0 ? (labels[0].name || "") : "",
+          catno: labels.length > 0 ? (labels[0].catno || "") : "",
           format: formats.join(", "),
           year: b.year || "",
           thumb: b.cover_image || b.thumb || ""
         };
       });
       state.loaded = true;
-    } catch (e) {
-      state.error = e.message;
+    } catch (e) { state.error = e.message; }
+    state.loading = false; state.progress = null; render();
+  }
+
+  // --- 8MM AVAILABILITY CHECK ---
+  async function checkAll8mm() {
+    state.checking = true; state.checkAbort = false;
+    var items = state.items;
+    var total = items.length;
+    var checked = 0;
+
+    state.checkProgress = { checked: 0, total: total, found: 0 };
+    render();
+
+    for (var i = 0; i < items.length; i++) {
+      if (state.checkAbort) break;
+      var it = items[i];
+      if (state.checkStatus[it.id]) { checked++; continue; }
+
+      var url = storeUrl(it.id, it.artist, it.title);
+      try {
+        var res = await fetch(url, { method: "GET", mode: "cors", redirect: "follow" });
+        var text = await res.text();
+        // Common Ground SPAs render a shell, but the <title> tag or og:title will have the release name if it exists
+        // If the item doesn't exist, the page typically redirects home or shows a generic title
+        var titleMatch = text.match(/<title[^>]*>([^<]*)<\/title>/i);
+        var pageTitle = titleMatch ? titleMatch[1].trim() : "";
+        var ogMatch = text.match(/<meta[^>]*property="og:title"[^>]*content="([^"]*)"/) ||
+                      text.match(/<meta[^>]*content="([^"]*)"[^>]*property="og:title"/);
+        var ogTitle = ogMatch ? ogMatch[1].trim() : "";
+
+        // Check: if the page title contains the release title or og:title has specific content
+        var hasRelease = false;
+        if (ogTitle && ogTitle !== "8mm Records" && ogTitle.length > 5) {
+          hasRelease = true;
+        } else if (pageTitle && pageTitle !== "8mm Records" && pageTitle.indexOf(it.title.substring(0, 10)) !== -1) {
+          hasRelease = true;
+        } else if (text.indexOf('"price"') !== -1 && text.indexOf('"in_stock"') !== -1) {
+          hasRelease = true;
+        } else if (text.indexOf('application/ld+json') !== -1 && text.indexOf(it.id.toString()) !== -1) {
+          hasRelease = true;
+        }
+        state.checkStatus[it.id] = hasRelease ? "found" : "notfound";
+      } catch (e) {
+        // CORS blocked or network error — try a fallback approach
+        state.checkStatus[it.id] = "error";
+      }
+
+      checked++;
+      var foundCount = 0;
+      Object.keys(state.checkStatus).forEach(function(k) {
+        if (state.checkStatus[k] === "found") foundCount++;
+      });
+      state.checkProgress = { checked: checked, total: total, found: foundCount };
+
+      if (checked % 3 === 0 || i === items.length - 1) render();
+      await sleep(400);
     }
 
-    state.loading = false;
-    state.progress = null;
+    state.checking = false;
     render();
   }
 
+  function stopCheck() { state.checkAbort = true; }
+
+  // --- HELPERS ---
   function getFormats() {
     var s = {};
     state.items.forEach(function(it) {
-      it.format.split(",").forEach(function(f) {
-        f = f.trim();
-        if (f) s[f] = true;
-      });
+      it.format.split(",").forEach(function(f) { f = f.trim(); if (f) s[f] = true; });
     });
     return ["all"].concat(Object.keys(s)).slice(0, 8);
   }
@@ -213,128 +298,161 @@ input:focus { border-color: #111; }
     var f = state.format;
     return state.items.filter(function(it) {
       var txt = (it.artist + " " + it.title + " " + it.label + " " + it.catno).toLowerCase();
-      var matchSearch = !q || txt.indexOf(q) !== -1;
-      var matchFmt = f === "all" || it.format.toLowerCase().indexOf(f.toLowerCase()) !== -1;
-      return matchSearch && matchFmt;
+      var ms = !q || txt.indexOf(q) !== -1;
+      var mf = f === "all" || it.format.toLowerCase().indexOf(f.toLowerCase()) !== -1;
+      var sf = !state.showOnlyFound || state.checkStatus[it.id] === "found";
+      return ms && mf && sf;
     });
   }
 
+  // --- RENDER ITEM ---
   function renderItem(it) {
     var su = storeUrl(it.id, it.artist, it.title);
     var meta = [it.label, it.year, it.format].filter(Boolean).join(" \u00b7 ");
-    var imgHtml = it.thumb
-      ? '<img class="item-img" src="' + esc(it.thumb) + '" alt="" loading="lazy" onerror="this.outerHTML=\'' + vinylSVG().replace(/'/g, "\\'") + '\'">'
-      : vinylSVG();
+    var vs = state.view;
 
-    return '<div class="item">' + imgHtml +
+    var imgHtml;
+    var phSize = vs === "list" ? 24 : 40;
+    if (it.thumb) {
+      imgHtml = '<img class="item-img" src="' + esc(it.thumb) + '" alt="" loading="lazy" onerror="this.parentElement.innerHTML=\'<div class=item-placeholder>' + vinylSVG(phSize).replace(/'/g, "\\'") + '</div>\'">';
+    } else {
+      imgHtml = '<div class="item-placeholder">' + vinylSVG(phSize) + '</div>';
+    }
+
+    var statusHtml = "";
+    var st = state.checkStatus[it.id];
+    if (st === "found") {
+      statusHtml = '<div class="item-status"><span class="badge found">\u2713 <a href="' + esc(su) + '" target="_blank" rel="noopener">In stock at 8mm</a></span></div>';
+    } else if (st === "notfound") {
+      statusHtml = '<div class="item-status"><span class="badge notfound">\u2014 Not in store</span></div>';
+    } else if (st === "error") {
+      statusHtml = '<div class="item-status"><span class="badge error">\u26A0 <a href="' + esc(su) + '" target="_blank" rel="noopener">Check manually</a></span></div>';
+    }
+
+    var linksHtml = '<div class="item-links">';
+    if (it.id && !st) {
+      linksHtml += '<a class="item-link" href="' + esc(su) + '" target="_blank" rel="noopener">8mm \u2192</a>';
+    }
+    linksHtml += '<a class="item-link sec" href="https://www.discogs.com/release/' + it.id + '" target="_blank" rel="noopener">Discogs</a>';
+    linksHtml += '</div>';
+
+    return '<div class="item">' +
+      '<div class="item-img-wrap">' + imgHtml + '</div>' +
       '<div class="item-body">' +
-      '<div class="item-artist">' + esc(it.artist) + '</div>' +
-      '<div class="item-title">' + esc(it.title) + '</div>' +
-      (meta ? '<div class="item-meta">' + esc(meta) + '</div>' : '') +
-      '<div class="item-links">' +
-      (it.id ? '<a class="item-link" href="' + esc(su) + '" target="_blank" rel="noopener">Check on 8mm \u2192</a>' : '') +
-      (it.id ? '<a class="item-link sec" href="https://www.discogs.com/release/' + it.id + '" target="_blank" rel="noopener">Discogs</a>' : '') +
-      '</div></div></div>';
+        '<div class="item-artist">' + esc(it.artist) + '</div>' +
+        '<div class="item-title">' + esc(it.title) + '</div>' +
+        (meta ? '<div class="item-meta">' + esc(meta) + '</div>' : '') +
+        statusHtml + linksHtml +
+      '</div></div>';
   }
 
-  function render() {
-    // --- LOGIN ---
-    if (!state.loaded && !state.loading) {
-      var errHtml = state.error
-        ? '<div class="error">' + esc(state.error) + '</div>'
-        : '';
+  // --- VIEW ICONS ---
+  var iconGrid = '<svg viewBox="0 0 16 16"><rect x="1" y="1" width="6" height="6" rx="1"/><rect x="9" y="1" width="6" height="6" rx="1"/><rect x="1" y="9" width="6" height="6" rx="1"/><rect x="9" y="9" width="6" height="6" rx="1"/></svg>';
+  var iconCompact = '<svg viewBox="0 0 16 16"><rect x="1" y="1" width="4" height="4" rx="0.5"/><rect x="6" y="1" width="4" height="4" rx="0.5"/><rect x="11" y="1" width="4" height="4" rx="0.5"/><rect x="1" y="6" width="4" height="4" rx="0.5"/><rect x="6" y="6" width="4" height="4" rx="0.5"/><rect x="11" y="6" width="4" height="4" rx="0.5"/><rect x="1" y="11" width="4" height="4" rx="0.5"/><rect x="6" y="11" width="4" height="4" rx="0.5"/><rect x="11" y="11" width="4" height="4" rx="0.5"/></svg>';
+  var iconList = '<svg viewBox="0 0 16 16"><rect x="1" y="2" width="14" height="3" rx="1"/><rect x="1" y="7" width="14" height="3" rx="1"/><rect x="1" y="12" width="14" height="3" rx="1"/></svg>';
 
+  // --- MAIN RENDER ---
+  function render() {
+    // LOGIN
+    if (!state.loaded && !state.loading) {
+      var errHtml = state.error ? '<div class="error">' + esc(state.error) + '</div>' : '';
       root.innerHTML = errHtml +
-        '<div class="card">' +
-          '<div class="form-row">' +
-            '<div><label>Discogs Username</label><input type="text" id="inp-user" placeholder="your_username"></div>' +
-            '<div><label>Personal Access Token</label><input type="password" id="inp-token" placeholder="paste your token here">' +
-            '<div class="help">Get one at <a href="https://www.discogs.com/settings/developers" target="_blank">discogs.com/settings/developers</a></div></div>' +
-          '</div>' +
-          '<div class="btn-row"><button class="btn" id="btn-go">Fetch My Wantlist</button></div>' +
-        '</div>' +
-        '<div class="card howto">' +
-          '<strong>How it works</strong><br>' +
+        '<div class="card"><div class="form-row">' +
+          '<div><label>Discogs Username</label><input type="text" id="inp-user" placeholder="your_username"></div>' +
+          '<div><label>Personal Access Token</label><input type="password" id="inp-token" placeholder="paste your token here">' +
+          '<div class="help">Get one at <a href="https://www.discogs.com/settings/developers" target="_blank">discogs.com/settings/developers</a></div></div>' +
+        '</div><div class="btn-row"><button class="btn" id="btn-go">Fetch My Wantlist</button></div></div>' +
+        '<div class="card howto"><strong>How it works</strong><br>' +
           '1. Enter your Discogs username and token above<br>' +
           '2. We fetch your wantlist from the Discogs API<br>' +
-          '3. Each item gets a direct link to check availability on <a href="https://www.8mm-records.com" target="_blank" style="font-weight:600">8mm Records</a>' +
-          '<div class="note">Your token is only used in-browser to call Discogs directly. Nothing is stored on any server.</div>' +
-        '</div>';
-
-      var btnGo = document.getElementById("btn-go");
-      var inpUser = document.getElementById("inp-user");
-      var inpToken = document.getElementById("inp-token");
-
-      btnGo.addEventListener("click", function() {
-        var u = inpUser.value.trim();
-        var t = inpToken.value.trim();
+          '3. Click "Check all on 8mm" to see which items are in their catalog<br>' +
+          '4. Found items get a direct link to their page on <a href="https://www.8mm-records.com" target="_blank" style="font-weight:600">8mm Records</a>' +
+          '<div class="note">Everything runs in your browser. Nothing is stored on any server.</div></div>';
+      document.getElementById("btn-go").addEventListener("click", function() {
+        var u = document.getElementById("inp-user").value.trim();
+        var t = document.getElementById("inp-token").value.trim();
         if (u) fetchWantlist(u, t);
       });
-      inpUser.addEventListener("keydown", function(e) { if (e.key === "Enter") btnGo.click(); });
-      inpToken.addEventListener("keydown", function(e) { if (e.key === "Enter") btnGo.click(); });
+      document.getElementById("inp-user").addEventListener("keydown", function(e) { if (e.key === "Enter") document.getElementById("btn-go").click(); });
+      document.getElementById("inp-token").addEventListener("keydown", function(e) { if (e.key === "Enter") document.getElementById("btn-go").click(); });
       return;
     }
 
-    // --- LOADING ---
+    // LOADING
     if (state.loading) {
       var p = state.progress;
       var pHtml = p
         ? '<div class="progress-text">Loaded ' + p.loaded + ' of ' + p.total + ' items (page ' + p.page + '/' + p.totalPages + ')</div>' +
           '<div class="progress-bar" style="max-width:300px;margin:8px auto 0"><div class="progress-fill" style="width:' + (p.loaded / Math.max(p.total, 1) * 100) + '%"></div></div>'
-        : '<div class="progress-text">Connecting to Discogs...</div>';
-
-      root.innerHTML =
-        '<div class="card" style="text-align:center;padding:40px">' +
-          '<div style="font-size:16px;font-weight:700;margin-bottom:12px">Fetching your wantlist\u2026</div>' +
-          pHtml +
-        '</div>';
+        : '<div class="progress-text">Connecting to Discogs\u2026</div>';
+      root.innerHTML = '<div class="card" style="text-align:center;padding:40px"><div style="font-size:16px;font-weight:700;margin-bottom:12px">Fetching your wantlist\u2026</div>' + pHtml + '</div>';
       return;
     }
 
-    // --- EMPTY ---
+    // EMPTY
     if (state.loaded && state.items.length === 0) {
-      root.innerHTML =
-        '<div class="card empty">' +
-          '<div style="font-size:18px;font-weight:700;margin-bottom:8px">Wantlist is empty</div>' +
-          '<div>No items found, or the wantlist is set to private.</div>' +
-          '<button class="btn-sec" style="margin-top:16px" id="btn-back">\u2190 Back</button>' +
-        '</div>';
-      document.getElementById("btn-back").addEventListener("click", function() {
-        state.loaded = false; render();
-      });
+      root.innerHTML = '<div class="card empty"><div style="font-size:18px;font-weight:700;margin-bottom:8px">Wantlist is empty</div>' +
+        '<div>No items found, or the wantlist is set to private.</div>' +
+        '<button class="btn-sec" style="margin-top:16px" id="btn-back">\u2190 Back</button></div>';
+      document.getElementById("btn-back").addEventListener("click", function() { state.loaded = false; render(); });
       return;
     }
 
-    // --- RESULTS ---
+    // RESULTS
     var filtered = getFiltered();
     var formats = getFormats();
     var shown = filtered.slice(0, state.visCount);
     var hasMore = shown.length < filtered.length;
     var artistSet = {};
     state.items.forEach(function(i) { artistSet[i.artist] = true; });
-    var artistCount = Object.keys(artistSet).length;
+    var foundCount = 0;
+    Object.keys(state.checkStatus).forEach(function(k) { if (state.checkStatus[k] === "found") foundCount++; });
+    var hasChecked = Object.keys(state.checkStatus).length > 0;
 
     var html = '';
 
-    html += '<div class="loaded-bar">' +
-      '<div style="font-size:13px;color:#666">Loaded <strong>' + state.items.length + '</strong> wantlist items</div>' +
-      '<button class="btn-sec" id="btn-reset">New search</button></div>';
+    // Top bar
+    html += '<div class="loaded-bar"><div style="font-size:13px;color:#666">Loaded <strong>' + state.items.length + '</strong> wantlist items</div>' +
+      '<button class="btn-sec btn-sm" id="btn-reset">New search</button></div>';
 
+    // Stats
     html += '<div class="stats">' +
       '<div class="stat"><div class="stat-num">' + state.items.length + '</div><div class="stat-label">Wantlist</div></div>' +
-      '<div class="stat"><div class="stat-num">' + filtered.length + '</div><div class="stat-label">Shown</div></div>' +
-      '<div class="stat"><div class="stat-num">' + artistCount + '</div><div class="stat-label">Artists</div></div>' +
-      '</div>';
-
-    html += '<div class="filters">' +
-      '<input class="search" id="inp-search" placeholder="Search artist, title, label\u2026" value="' + esc(state.search) + '">';
-    formats.forEach(function(f) {
-      var cls = "fbtn" + (state.format === f ? " active" : "");
-      html += '<button class="' + cls + '" data-f="' + esc(f) + '">' + (f === "all" ? "All" : esc(f)) + '</button>';
-    });
+      '<div class="stat"><div class="stat-num">' + Object.keys(artistSet).length + '</div><div class="stat-label">Artists</div></div>';
+    if (hasChecked) {
+      html += '<div class="stat"><div class="stat-num green">' + foundCount + '</div><div class="stat-label">Found at 8mm</div></div>';
+    }
     html += '</div>';
 
-    html += '<div class="grid">';
+    // Check bar
+    html += '<div class="check-bar">';
+    if (!state.checking) {
+      html += '<button class="btn-check" id="btn-check">' + (hasChecked ? '\u21BB Re-check all on 8mm' : '\u2713 Check all on 8mm') + '</button>';
+      if (hasChecked && foundCount > 0) {
+        html += '<button class="fbtn' + (state.showOnlyFound ? ' active' : '') + '" id="btn-toggle-found">Show only found (' + foundCount + ')</button>';
+      }
+    } else {
+      var cp = state.checkProgress || { checked: 0, total: state.items.length, found: 0 };
+      html += '<button class="btn-sec btn-sm" id="btn-stop">\u25A0 Stop</button>' +
+        '<div class="progress-wrap"><div class="progress-text">Checking\u2026 ' + cp.checked + '/' + cp.total + ' (' + cp.found + ' found)</div>' +
+        '<div class="progress-bar"><div class="progress-fill green" style="width:' + (cp.checked / Math.max(cp.total, 1) * 100) + '%"></div></div></div>';
+    }
+    html += '</div>';
+
+    // Toolbar: search + format filters + view toggle
+    html += '<div class="toolbar">' +
+      '<input class="search" id="inp-search" placeholder="Search artist, title, label\u2026" value="' + esc(state.search) + '">';
+    formats.forEach(function(f) {
+      html += '<button class="fbtn' + (state.format === f ? ' active' : '') + '" data-f="' + esc(f) + '">' + (f === "all" ? "All" : esc(f)) + '</button>';
+    });
+    html += '<div class="view-toggle">' +
+      '<button class="vbtn' + (state.view === "grid" ? ' active' : '') + '" data-v="grid" title="Grid">' + iconGrid + '</button>' +
+      '<button class="vbtn' + (state.view === "compact" ? ' active' : '') + '" data-v="compact" title="Compact">' + iconCompact + '</button>' +
+      '<button class="vbtn' + (state.view === "list" ? ' active' : '') + '" data-v="list" title="List">' + iconList + '</button>' +
+      '</div></div>';
+
+    // Items
+    html += '<div class="' + state.view + '">';
     shown.forEach(function(it) { html += renderItem(it); });
     html += '</div>';
 
@@ -347,40 +465,43 @@ input:focus { border-color: #111; }
 
     root.innerHTML = html;
 
-    // Bind events
+    // --- BIND EVENTS ---
     document.getElementById("btn-reset").addEventListener("click", function() {
-      state.loaded = false; state.items = []; state.error = null;
-      state.search = ""; state.format = "all"; state.visCount = PER_PAGE;
+      state.loaded = false; state.items = []; state.error = null; state.search = ""; state.format = "all";
+      state.visCount = PER_PAGE; state.checkStatus = {}; state.checking = false; state.showOnlyFound = false;
       render();
     });
 
     var inpSearch = document.getElementById("inp-search");
     if (inpSearch) {
       inpSearch.addEventListener("input", function(e) {
-        state.search = e.target.value;
-        state.visCount = PER_PAGE;
-        render();
+        state.search = e.target.value; state.visCount = PER_PAGE; render();
         var el = document.getElementById("inp-search");
         if (el) { el.focus(); el.setSelectionRange(el.value.length, el.value.length); }
       });
     }
 
-    var fbtns = document.querySelectorAll(".fbtn");
-    fbtns.forEach(function(b) {
-      b.addEventListener("click", function() {
-        state.format = b.getAttribute("data-f");
-        state.visCount = PER_PAGE;
-        render();
-      });
+    document.querySelectorAll(".fbtn[data-f]").forEach(function(b) {
+      b.addEventListener("click", function() { state.format = b.getAttribute("data-f"); state.visCount = PER_PAGE; render(); });
+    });
+
+    document.querySelectorAll(".vbtn").forEach(function(b) {
+      b.addEventListener("click", function() { state.view = b.getAttribute("data-v"); render(); });
     });
 
     var btnMore = document.getElementById("btn-more");
-    if (btnMore) {
-      btnMore.addEventListener("click", function() {
-        state.visCount += PER_PAGE;
-        render();
-      });
-    }
+    if (btnMore) btnMore.addEventListener("click", function() { state.visCount += PER_PAGE; render(); });
+
+    var btnCheck = document.getElementById("btn-check");
+    if (btnCheck) btnCheck.addEventListener("click", function() { checkAll8mm(); });
+
+    var btnStop = document.getElementById("btn-stop");
+    if (btnStop) btnStop.addEventListener("click", function() { stopCheck(); });
+
+    var btnToggle = document.getElementById("btn-toggle-found");
+    if (btnToggle) btnToggle.addEventListener("click", function() {
+      state.showOnlyFound = !state.showOnlyFound; state.visCount = PER_PAGE; render();
+    });
   }
 
   render();
