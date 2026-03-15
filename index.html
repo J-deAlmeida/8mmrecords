@@ -7,127 +7,158 @@
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
 <style>
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
-body{font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;background:#fafafa;color:#1a1a1a;min-height:100vh}
+:root{--bg:#fafafa;--bg2:#fff;--bg3:#f5f5f5;--tx:#1a1a1a;--tx2:#666;--tx3:#999;--bd:#e5e5e5;--bd2:#eee;--bd3:#ddd;--acc:#111;--grn:#0a7d4f;--grn2:#e6f7ee;--grn3:#096b43;--grnd:#93c9ae;--err:#c00;--errbg:#fff5f5;--errbd:#fdd;--amberbg:#FAEEDA;--ambertx:#854F0B}
+.dark{--bg:#161616;--bg2:#222;--bg3:#2a2a2a;--tx:#e5e5e5;--tx2:#aaa;--tx3:#777;--bd:#333;--bd2:#383838;--bd3:#444;--acc:#eee;--grn:#2ecc71;--grn2:#1a3a2a;--grn3:#27ae60;--grnd:#555;--err:#ff6b6b;--errbg:#2a1a1a;--errbd:#4a2020;--amberbg:#412402;--ambertx:#FAC775}
+body{font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;background:var(--bg);color:var(--tx);min-height:100vh;transition:background .2s,color .2s}
 a{color:inherit}
 .app{max-width:960px;margin:0 auto;padding:24px 16px 60px}
 .header{text-align:center;margin-bottom:32px}
-.logo{font-size:28px;font-weight:800;letter-spacing:-.5px;color:#111}
-.logo span{color:#888;font-weight:400}
-.sub{font-size:13px;color:#888;margin-top:4px}
-.card{background:#fff;border:1px solid #e5e5e5;border-radius:12px;padding:24px;margin-bottom:20px}
+.logo{font-size:28px;font-weight:800;letter-spacing:-.5px;color:var(--acc)}
+.logo span{color:var(--tx3);font-weight:400}
+.sub{font-size:13px;color:var(--tx3);margin-top:4px}
+.ver{font-size:11px;color:var(--tx3);margin-top:6px;font-family:monospace}
+.dm-toggle{position:absolute;top:16px;right:16px;background:var(--bg2);border:1px solid var(--bd);border-radius:8px;padding:6px 10px;cursor:pointer;font-size:16px;line-height:1}
+.dm-toggle:hover{border-color:var(--tx3)}
+.card{background:var(--bg2);border:1px solid var(--bd);border-radius:12px;padding:24px;margin-bottom:20px;transition:background .2s,border-color .2s}
 .form-row{display:grid;grid-template-columns:1fr 1fr;gap:16px}
 @media(max-width:600px){.form-row{grid-template-columns:1fr}}
-label{display:block;font-size:13px;font-weight:600;color:#333;margin-bottom:6px}
-.inp{width:100%;padding:10px 12px;border:1px solid #ddd;border-radius:8px;font-size:14px;outline:none;transition:border .2s;font-family:inherit;background:#fff;color:#1a1a1a}
-.inp:focus{border-color:#111}
-.help{font-size:12px;color:#888;margin-top:4px}
-.help a{color:#111;font-weight:600}
-.btn{background:#111;color:#fff;border:none;border-radius:8px;padding:12px 28px;font-size:14px;font-weight:600;cursor:pointer;font-family:inherit;transition:all .2s}
-.btn:hover{background:#333}
-.btn:disabled{background:#999;cursor:not-allowed}
-.btn-sec{background:#fff;color:#111;border:1px solid #ddd;border-radius:8px;padding:10px 20px;font-size:13px;font-weight:600;cursor:pointer;font-family:inherit}
-.btn-sec:hover{background:#f5f5f5}
+label{display:block;font-size:13px;font-weight:600;color:var(--tx);margin-bottom:6px}
+.inp{width:100%;padding:10px 12px;border:1px solid var(--bd3);border-radius:8px;font-size:14px;outline:none;transition:border .2s;font-family:inherit;background:var(--bg2);color:var(--tx)}
+.inp:focus{border-color:var(--acc)}
+.help{font-size:12px;color:var(--tx3);margin-top:4px}
+.help a{color:var(--acc);font-weight:600}
+.btn{background:var(--acc);color:var(--bg);border:none;border-radius:8px;padding:12px 28px;font-size:14px;font-weight:600;cursor:pointer;font-family:inherit;transition:all .2s}
+.btn:hover{opacity:.85}
+.btn:disabled{opacity:.5;cursor:not-allowed}
+.btn-sec{background:var(--bg2);color:var(--tx);border:1px solid var(--bd3);border-radius:8px;padding:10px 20px;font-size:13px;font-weight:600;cursor:pointer;font-family:inherit}
+.btn-sec:hover{background:var(--bg3)}
 .btn-sm{padding:6px 14px;font-size:12px;border-radius:6px}
-.btn-green{background:#0a7d4f;color:#fff;border:none;border-radius:8px;padding:10px 22px;font-size:13px;font-weight:600;cursor:pointer;font-family:inherit}
-.btn-green:hover{background:#096b43}
-.btn-green:disabled{background:#93c9ae;cursor:not-allowed}
+.btn-green{background:var(--grn);color:#fff;border:none;border-radius:8px;padding:10px 22px;font-size:13px;font-weight:600;cursor:pointer;font-family:inherit}
+.btn-green:hover{background:var(--grn3)}
+.btn-green:disabled{background:var(--grnd);cursor:not-allowed}
 .btn-row{margin-top:16px;display:flex;align-items:center;gap:10px;flex-wrap:wrap}
-.progress-text{font-size:12px;color:#666}
-.pbar{background:#f0f0f0;border-radius:4px;height:6px;overflow:hidden;margin-top:6px}
+.progress-text{font-size:12px;color:var(--tx2)}
+.pbar{background:var(--bg3);border-radius:4px;height:6px;overflow:hidden;margin-top:6px;width:100%}
 .pfill{height:100%;border-radius:4px;transition:width .3s ease}
-.pfill-dark{background:#111}
-.pfill-green{background:#0a7d4f}
-.error{background:#fff5f5;border:1px solid #fdd;border-radius:8px;padding:16px;color:#c00;font-size:13px;margin-bottom:16px}
+.pfill-dark{background:var(--acc)}
+.pfill-green{background:var(--grn)}
+.error{background:var(--errbg);border:1px solid var(--errbd);border-radius:8px;padding:16px;color:var(--err);font-size:13px;margin-bottom:16px}
 .stats{display:flex;gap:12px;margin-bottom:16px;flex-wrap:wrap}
-.stat{background:#fff;border:1px solid #eee;border-radius:8px;padding:12px 18px;flex:1;min-width:80px}
-.stat-n{font-size:22px;font-weight:800;color:#111}
-.stat-n.green{color:#0a7d4f}
-.stat-l{font-size:11px;color:#888;text-transform:uppercase;letter-spacing:.5px}
+.stat{background:var(--bg2);border:1px solid var(--bd2);border-radius:8px;padding:12px 18px;flex:1;min-width:80px;transition:background .2s}
+.stat-n{font-size:22px;font-weight:800;color:var(--tx)}
+.stat-n.green{color:var(--grn)}
+.stat-l{font-size:11px;color:var(--tx3);text-transform:uppercase;letter-spacing:.5px}
 .toolbar{display:flex;gap:8px;margin-bottom:16px;flex-wrap:wrap;align-items:center}
-.search{padding:8px 12px;border:1px solid #ddd;border-radius:8px;font-size:13px;flex:1;min-width:140px;outline:none;font-family:inherit}
-.search:focus{border-color:#111}
-.fbtn{padding:5px 12px;font-size:12px;font-weight:600;border-radius:6px;border:1px solid #ddd;cursor:pointer;background:#fff;color:#333;font-family:inherit;transition:all .15s}
-.fbtn:hover{border-color:#999}
-.fbtn.on{background:#111;color:#fff;border-color:#111}
-.vtog{display:flex;border:1px solid #ddd;border-radius:6px;overflow:hidden;margin-left:auto;flex-shrink:0}
-.vb{padding:6px 10px;border:none;background:#fff;cursor:pointer;display:flex;align-items:center;justify-content:center}
-.vb+.vb{border-left:1px solid #ddd}
-.vb.on{background:#111}
-.vb.on svg *{stroke:#fff}
-.vb svg{width:16px;height:16px;stroke:#666;stroke-width:2;fill:none}
-.check-bar{background:#fff;border:1px solid #e5e5e5;border-radius:10px;padding:14px 18px;margin-bottom:16px;display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+.search{padding:8px 12px;border:1px solid var(--bd3);border-radius:8px;font-size:13px;flex:1;min-width:140px;outline:none;font-family:inherit;background:var(--bg2);color:var(--tx)}
+.search:focus{border-color:var(--acc)}
+.fbtn{padding:5px 12px;font-size:12px;font-weight:600;border-radius:20px;border:0.5px solid var(--bd3);cursor:pointer;background:var(--bg2);color:var(--tx2);font-family:inherit;transition:all .15s;display:inline-flex;align-items:center;gap:5px}
+.fbtn:hover{border-color:var(--tx3)}
+.fbtn.on{background:var(--bg3);color:var(--tx);border-color:var(--acc)}
+.fbtn .fc{font-size:11px;color:var(--tx3);font-weight:400}
+.fbtn .fc span{color:var(--grn);font-weight:600}
+.vtog{display:flex;border:1px solid var(--bd3);border-radius:6px;overflow:hidden;margin-left:auto;flex-shrink:0}
+.vb{padding:6px 10px;border:none;background:var(--bg2);cursor:pointer;display:flex;align-items:center;justify-content:center}
+.vb+.vb{border-left:1px solid var(--bd3)}
+.vb.on{background:var(--acc)}
+.vb.on svg *{stroke:var(--bg)}
+.vb svg{width:16px;height:16px;stroke:var(--tx2);stroke-width:2;fill:none}
+.check-bar{background:var(--bg2);border:1px solid var(--bd);border-radius:10px;padding:14px 18px;margin-bottom:16px;display:flex;align-items:center;gap:14px;flex-wrap:wrap;transition:background .2s}
 .check-bar .pw{flex:1;min-width:200px}
+
+/* Format badges */
+.fmt-badge{display:inline-flex;align-items:center;font-size:10px;font-weight:600;padding:2px 8px;border-radius:10px;white-space:nowrap}
+.fmt-vinyl{background:#EEEDFE;color:#534AB7}
+.fmt-cd{background:#E6F1FB;color:#185FA5}
+.fmt-cass{background:#FAEEDA;color:#854F0B}
+.fmt-file{background:#F1EFE8;color:#5F5E5A}
+.fmt-box{background:#E1F5EE;color:#0F6E56}
+.fmt-other{background:#F1EFE8;color:#5F5E5A}
+.dark .fmt-vinyl{background:#26215C;color:#AFA9EC}
+.dark .fmt-cd{background:#042C53;color:#85B7EB}
+.dark .fmt-cass{background:#412402;color:#FAC775}
+.dark .fmt-file{background:#2C2C2A;color:#B4B2A9}
+.dark .fmt-box{background:#04342C;color:#5DCAA5}
+.dark .fmt-other{background:#2C2C2A;color:#B4B2A9}
+
+/* Items */
 .v-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:14px}
-.v-grid .it{background:#fff;border:1px solid #e8e8e8;border-radius:10px;overflow:hidden;transition:box-shadow .2s,transform .15s;display:flex;flex-direction:column}
+.v-grid .it{background:var(--bg2);border:1px solid var(--bd);border-radius:10px;overflow:hidden;transition:box-shadow .2s,transform .15s;display:flex;flex-direction:column}
 .v-grid .it:hover{box-shadow:0 4px 20px rgba(0,0,0,.08);transform:translateY(-2px)}
-.v-grid .it-iw{width:100%;padding-top:100%;position:relative;overflow:hidden;background:#f5f5f5;flex-shrink:0}
+.v-grid .it-iw{width:100%;padding-top:100%;position:relative;overflow:hidden;background:var(--bg3);flex-shrink:0}
 .v-grid .it-iw img{position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover}
 .v-grid .it-iw .ph{position:absolute;top:0;left:0;width:100%;height:100%;display:flex;align-items:center;justify-content:center}
 .v-grid .it-bd{padding:10px 12px;flex:1;display:flex;flex-direction:column}
-.v-grid .it-ar{font-size:11px;font-weight:600;color:#666;text-transform:uppercase;letter-spacing:.4px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.v-grid .it-ti{font-size:13px;font-weight:700;color:#111;margin-top:1px;line-height:1.3;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
-.v-grid .it-me{font-size:10px;color:#888;margin-top:3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.v-list .it{background:#fff;border:1px solid #e8e8e8;border-radius:8px;display:flex;align-items:center;gap:12px;padding:10px 14px;margin-bottom:8px;transition:box-shadow .2s}
+.v-grid .it-ar{font-size:11px;font-weight:600;color:var(--tx2);text-transform:uppercase;letter-spacing:.4px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.v-grid .it-ti{font-size:13px;font-weight:700;color:var(--tx);margin-top:1px;line-height:1.3;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.v-grid .it-me{font-size:10px;color:var(--tx3);margin-top:3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.v-list .it{background:var(--bg2);border:1px solid var(--bd);border-radius:8px;display:flex;align-items:center;gap:12px;padding:10px 14px;margin-bottom:8px;transition:box-shadow .2s}
 .v-list .it:hover{box-shadow:0 2px 12px rgba(0,0,0,.06)}
-.v-list .it-iw{width:52px;height:52px;flex-shrink:0;border-radius:6px;overflow:hidden;background:#f5f5f5;position:relative}
+.v-list .it-iw{width:52px;height:52px;flex-shrink:0;border-radius:6px;overflow:hidden;background:var(--bg3);position:relative}
 .v-list .it-iw img{width:100%;height:100%;object-fit:cover}
 .v-list .it-iw .ph{width:100%;height:100%;display:flex;align-items:center;justify-content:center}
 .v-list .it-bd{flex:1;min-width:0}
-.v-list .it-ar{font-size:11px;font-weight:600;color:#666;text-transform:uppercase;letter-spacing:.3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.v-list .it-ti{font-size:13px;font-weight:700;color:#111;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.v-list .it-me{font-size:11px;color:#888;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.v-list .it-ar{font-size:11px;font-weight:600;color:var(--tx2);text-transform:uppercase;letter-spacing:.3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.v-list .it-ti{font-size:13px;font-weight:700;color:var(--tx);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.v-list .it-me{font-size:11px;color:var(--tx3);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .v-list .it-act{flex-shrink:0;display:flex;align-items:center;gap:6px}
 .v-compact{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:10px}
-.v-compact .it{background:#fff;border:1px solid #e8e8e8;border-radius:8px;overflow:hidden;transition:box-shadow .2s,transform .15s}
+.v-compact .it{background:var(--bg2);border:1px solid var(--bd);border-radius:8px;overflow:hidden;transition:box-shadow .2s,transform .15s}
 .v-compact .it:hover{box-shadow:0 3px 14px rgba(0,0,0,.07);transform:translateY(-1px)}
-.v-compact .it-iw{width:100%;padding-top:100%;position:relative;overflow:hidden;background:#f5f5f5}
+.v-compact .it-iw{width:100%;padding-top:100%;position:relative;overflow:hidden;background:var(--bg3)}
 .v-compact .it-iw img{position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover}
 .v-compact .it-iw .ph{position:absolute;top:0;left:0;width:100%;height:100%;display:flex;align-items:center;justify-content:center}
 .v-compact .it-bd{padding:7px 9px}
-.v-compact .it-ar{font-size:10px;font-weight:600;color:#666;text-transform:uppercase;letter-spacing:.3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.v-compact .it-ti{font-size:11px;font-weight:700;color:#111;margin-top:1px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.v-compact .it-ar{font-size:10px;font-weight:600;color:var(--tx2);text-transform:uppercase;letter-spacing:.3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.v-compact .it-ti{font-size:11px;font-weight:700;color:var(--tx);margin-top:1px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .v-compact .it-me{display:none}
-.it-lnk{display:inline-flex;align-items:center;font-size:11px;font-weight:600;color:#111;text-decoration:none;padding:4px 10px;border:1px solid #ddd;border-radius:5px;transition:all .15s;background:#fff;white-space:nowrap}
-.it-lnk:hover{background:#111;color:#fff}
-.it-lnk.sec{color:#888;border-color:#eee}
-.it-lnk.sec:hover{background:#f5f5f5;color:#333}
-.badge{display:inline-flex;align-items:center;gap:4px;font-size:11px;font-weight:600;padding:3px 10px;border-radius:20px;white-space:nowrap}
-.badge.found{background:#e6f7ee;color:#0a7d4f}
-.badge.found a{color:#0a7d4f;text-decoration:underline;text-underline-offset:2px}
-.badge.notfound{background:#f5f5f5;color:#999}
-.badge.err{background:#fff8e6;color:#a68600}
-.badge.err a{color:#a68600;text-decoration:underline;text-underline-offset:2px}
+
+.it-lnk{display:inline-flex;align-items:center;font-size:11px;font-weight:600;color:var(--tx3);text-decoration:none;padding:3px 8px;border:1px solid var(--bd2);border-radius:5px;transition:all .15s;background:var(--bg2);white-space:nowrap}
+.it-lnk:hover{background:var(--bg3);color:var(--tx)}
+.badge{display:inline-flex;align-items:center;gap:3px;font-size:10px;font-weight:600;padding:2px 8px;border-radius:10px;white-space:nowrap}
+.badge a{text-decoration:underline;text-underline-offset:2px}
+.badge.found{background:var(--grn2);color:var(--grn)}
+.badge.found a{color:var(--grn)}
+.badge.notfound{background:var(--bg3);color:var(--tx3)}
+.badge.err{background:var(--amberbg);color:var(--ambertx)}
+.badge.err a{color:var(--ambertx)}
+.badge.oos{opacity:.6}
+.badge.oos a{text-decoration:line-through}
+.badge .hint{font-size:9px;font-weight:400;opacity:.7}
 .it-st{margin-top:5px}
 .it-lks{display:flex;gap:4px;flex-wrap:wrap;margin-top:5px}
-.empty{text-align:center;padding:40px;color:#888}
-.howto{text-align:center;color:#666;font-size:13px;line-height:1.7}
-.howto strong{color:#333}
-.note{font-size:12px;color:#999;margin-top:12px}
+
+.empty{text-align:center;padding:40px;color:var(--tx3)}
+.howto{text-align:center;color:var(--tx2);font-size:13px;line-height:1.7}
+.howto strong{color:var(--tx)}
+.note{font-size:12px;color:var(--tx3);margin-top:12px}
 .top-bar{display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;flex-wrap:wrap;gap:10px}
 .more{text-align:center;padding:20px}
 .vinyl{opacity:.15}
-@keyframes spin{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}
-.spinner{display:inline-block;animation:spin 2s linear infinite;flex-shrink:0}
-.dig-msg{font-size:12px;color:#888;font-style:italic;margin-top:4px;min-height:16px}
-.token-guide{margin-top:20px;border:1px solid #eee;border-radius:10px;overflow:hidden}
-.token-toggle{width:100%;padding:14px 18px;background:#fff;border:none;cursor:pointer;font-family:inherit;font-size:13px;font-weight:600;color:#333;display:flex;align-items:center;gap:8px;text-align:left}
-.token-toggle:hover{background:#fafafa}
-.token-toggle .arrow{transition:transform .2s;font-size:10px;color:#999}
+.priv-note{margin-top:16px;padding-top:16px;border-top:1px solid var(--bd2);font-size:11px;color:var(--tx3);line-height:1.7}
+.token-guide{margin-top:20px;border:1px solid var(--bd2);border-radius:10px;overflow:hidden}
+.token-toggle{width:100%;padding:14px 18px;background:var(--bg2);border:none;cursor:pointer;font-family:inherit;font-size:13px;font-weight:600;color:var(--tx2);display:flex;align-items:center;gap:8px;text-align:left}
+.token-toggle:hover{background:var(--bg3)}
+.token-toggle .arrow{transition:transform .2s;font-size:10px;color:var(--tx3)}
 .token-toggle .arrow.open{transform:rotate(90deg)}
 .token-steps{padding:0 18px 18px;display:none}
 .token-steps.show{display:block}
-.tstep{display:flex;gap:12px;padding:12px 0;border-bottom:1px solid #f0f0f0}
+.tstep{display:flex;gap:12px;padding:12px 0;border-bottom:1px solid var(--bd2)}
 .tstep:last-child{border-bottom:none}
-.tstep-n{width:28px;height:28px;border-radius:50%;background:#111;color:#fff;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;flex-shrink:0;margin-top:2px}
-.tstep-body{flex:1;font-size:13px;color:#555;line-height:1.6}
-.tstep-body strong{color:#111}
-.tstep-body code{background:#f0f0f0;padding:2px 6px;border-radius:4px;font-size:12px;font-family:'SF Mono',Monaco,monospace}
-.mock-browser{margin-top:10px;border:1px solid #ddd;border-radius:8px;overflow:hidden;background:#fff}
-.mock-bar{background:#f0f0f0;padding:6px 10px;display:flex;align-items:center;gap:6px;border-bottom:1px solid #ddd}
-.mock-dot{width:8px;height:8px;border-radius:50%;background:#ccc}
-.mock-url{flex:1;background:#fff;border-radius:4px;padding:3px 8px;font-size:10px;color:#888;font-family:monospace}
-.mock-body{padding:16px;font-size:12px;color:#555}
-.priv-note{margin-top:16px;padding-top:16px;border-top:1px solid #f0f0f0;font-size:11px;color:#aaa;line-height:1.7}
+.tstep-n{width:28px;height:28px;border-radius:50%;background:var(--acc);color:var(--bg);display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;flex-shrink:0;margin-top:2px}
+.tstep-body{flex:1;font-size:13px;color:var(--tx2);line-height:1.6}
+.tstep-body strong{color:var(--tx)}
+.tstep-body code{background:var(--bg3);padding:2px 6px;border-radius:4px;font-size:12px;font-family:'SF Mono',Monaco,monospace}
+.mock-browser{margin-top:10px;border:1px solid var(--bd3);border-radius:8px;overflow:hidden;background:var(--bg2)}
+.mock-bar{background:var(--bg3);padding:6px 10px;display:flex;align-items:center;gap:6px;border-bottom:1px solid var(--bd3)}
+.mock-dot{width:8px;height:8px;border-radius:50%;background:var(--bd3)}
+.mock-url{flex:1;background:var(--bg2);border-radius:4px;padding:3px 8px;font-size:10px;color:var(--tx3);font-family:monospace}
+.mock-body{padding:16px;font-size:12px;color:var(--tx2)}
+
+@keyframes spin{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}
+.spinner{width:22px;height:22px;display:inline-flex;align-items:center;justify-content:center;flex-shrink:0;animation:spin 1.8s linear infinite}
+.spinner svg{display:block}
+.dig-msg{font-size:12px;color:var(--tx3);font-style:italic;margin-top:4px;height:16px;overflow:hidden}
+
 @media(max-width:600px){
   .v-grid{grid-template-columns:repeat(auto-fill,minmax(150px,1fr))}
   .v-compact{grid-template-columns:repeat(auto-fill,minmax(110px,1fr))}
@@ -138,10 +169,11 @@ label{display:block;font-size:13px;font-weight:600;color:#333;margin-bottom:6px}
 </head>
 <body>
 <div class="app">
+  <button class="dm-toggle" id="dmtog" title="Toggle dark mode">&#9790;</button>
   <div class="header">
     <div class="logo">8mm Records <span>&times;</span> Discogs</div>
     <div class="sub">Check which records from your wantlist are available at 8mm Records</div>
-    <div style="font-size:11px;color:#bbb;margin-top:6px;font-family:monospace">v3.5 &mdash; 2026-03-15 03:00</div>
+    <div class="ver">v4.0 &mdash; 2026-03-15</div>
   </div>
   <div id="root"></div>
 </div>
@@ -153,8 +185,14 @@ var API="https://api.discogs.com";
 var WORKER="https://8mm-proxy.jsantosdealmeida.workers.dev/";
 var PER_PAGE=60;
 var CONCURRENT=6;
-var root=document.getElementById("root");
 
+/* Dark mode */
+if(localStorage.getItem("dm")==="1")document.body.classList.add("dark");
+document.getElementById("dmtog").addEventListener("click",function(){
+  document.body.classList.toggle("dark");
+  localStorage.setItem("dm",document.body.classList.contains("dark")?"1":"0")});
+
+var root=document.getElementById("root");
 var S={items:[],loaded:false,loading:false,error:null,progress:null,
   search:"",format:"all",vis:PER_PAGE,view:"grid",
   cs:{},checking:false,cprog:null,cabort:false,onlyFound:false,
@@ -168,7 +206,14 @@ function slug(t){return(t||"").toLowerCase().replace(/[^a-z0-9]+/g,"-").replace(
 function surl(id,a,t){return STORE+"/release/"+id+"/"+slug(a+"-"+t)}
 function wait(ms){return new Promise(function(r){setTimeout(r,ms)})}
 function $(id){return document.getElementById(id)}
-function svg(sz){sz=sz||36;return '<svg class="vinyl" width="'+sz+'" height="'+sz+'" viewBox="0 0 48 48"><circle cx="24" cy="24" r="22" stroke="#aaa" stroke-width="1.5" fill="none"/><circle cx="24" cy="24" r="8" stroke="#aaa" stroke-width="1.5" fill="none"/><circle cx="24" cy="24" r="2" fill="#bbb"/></svg>'}
+function svg(sz){sz=sz||36;var c=document.body.classList.contains("dark");
+  return'<svg class="vinyl" width="'+sz+'" height="'+sz+'" viewBox="0 0 48 48"><circle cx="24" cy="24" r="22" stroke="'+(c?"#555":"#aaa")+'" stroke-width="1.5" fill="none"/><circle cx="24" cy="24" r="8" stroke="'+(c?"#555":"#aaa")+'" stroke-width="1.5" fill="none"/><circle cx="24" cy="24" r="2" fill="'+(c?"#666":"#bbb")+'"/></svg>'}
+function spinSvg(){return'<span class="spinner"><svg width="22" height="22" viewBox="0 0 48 48"><circle cx="24" cy="24" r="22" fill="var(--tx)" opacity=".15"/><circle cx="24" cy="24" r="20" fill="none" stroke="var(--tx)" stroke-width=".5" opacity=".15"/><circle cx="24" cy="24" r="16" fill="none" stroke="var(--tx)" stroke-width=".4" opacity=".1"/><circle cx="24" cy="24" r="12" fill="none" stroke="var(--tx)" stroke-width=".4" opacity=".1"/><circle cx="24" cy="24" r="7" fill="var(--grn)"/><circle cx="24" cy="24" r="2.5" fill="var(--bg2)"/><circle cx="24" cy="24" r="1" fill="var(--tx)" opacity=".3"/><circle cx="18" cy="14" r="3" fill="var(--grn)" opacity=".5"/></svg></span>'}
+window.repImg=function(img){var sz=parseInt(img.getAttribute("data-sz"))||36;var d=document.createElement("div");d.className="ph";d.innerHTML=svg(sz);img.parentNode.replaceChild(d,img)};
+
+var DIG_MSGS=["Checking through dusty Kallax furniture\u2026","Trying not to fall from the ladder\u2026","Flipping through the jazz section sideways\u2026","Blowing dust off a rare pressing\u2026","Squinting at handwritten price stickers\u2026","Careful, that sleeve is fragile\u2026","Pretending to know what \u2018first pressing\u2019 means\u2026","Lost in the world music section\u2026 send help\u2026","Is that a test pressing?! Oh wait, no\u2026","Holding a record up to the light to check for warps\u2026","The bin dividers are lying to me\u2026","Someone just put on a killer B-side at Fiasco\u2026","Asking Segurado for a drink\u2026","Someone just asked Cl\u00e1udio where\u2019s the toilet\u2026"];
+for(var _i=DIG_MSGS.length-1;_i>0;_i--){var _j=Math.floor(Math.random()*(_i+1));var _t=DIG_MSGS[_i];DIG_MSGS[_i]=DIG_MSGS[_j];DIG_MSGS[_j]=_t}
+var digIdx=0;function nextDig(){digIdx=(digIdx+1)%DIG_MSGS.length;return DIG_MSGS[digIdx]}
 
 /* ========== DISCOGS FETCH ========== */
 async function fetchWL(){
@@ -178,135 +223,73 @@ async function fetchWL(){
   var pg=1,all=[],tp=1,tot=0;
   try{
     while(pg<=tp){
-      var hd={"User-Agent":"8mmWLCheck/1.0"};
+      var hd={"User-Agent":"8mmWLCheck/2.0"};
       if(S.token)hd["Authorization"]="Discogs token="+S.token;
       var url=API+"/users/"+encodeURIComponent(S.user)+"/wants?per_page=100&page="+pg+"&sort=added&sort_order=desc";
       var r=await fetch(url,{headers:hd});
-      if(!r.ok){
-        if(r.status===401)throw new Error("Authentication failed \u2014 check your token.");
-        if(r.status===404)throw new Error("User not found \u2014 check your username.");
-        if(r.status===429){await wait(2500);continue}
-        throw new Error("Discogs error ("+r.status+")")
-      }
-      var d=await r.json();
-      tp=d.pagination&&d.pagination.pages||1;
-      tot=d.pagination&&d.pagination.items||0;
-      all=all.concat(d.wants||[]);
-      S.progress={ld:all.length,tot:tot,pg:pg,tp:tp};render();
-      pg++;if(pg<=tp)await wait(1100)
-    }
-    S.items=all.map(function(w){
-      var b=w.basic_information||{};
-      return{
-        id:String(b.id||w.id||""),
-        artist:(b.artists||[]).map(function(a){return a.name.replace(/ \(\d+\)$/,"")}).join(", ")||"Unknown",
-        title:b.title||"",
-        label:(b.labels||[])[0]?b.labels[0].name:"",
-        catno:(b.labels||[])[0]?b.labels[0].catno:"",
-        format:(b.formats||[]).map(function(f){return f.name}).join(", "),
-        year:b.year||"",
-        thumb:b.cover_image||b.thumb||""
-      }
-    });
+      if(!r.ok){if(r.status===401)throw new Error("Authentication failed.");if(r.status===404)throw new Error("User not found.");if(r.status===429){await wait(2500);continue}throw new Error("Discogs error ("+r.status+")")}
+      var d=await r.json();tp=d.pagination&&d.pagination.pages||1;tot=d.pagination&&d.pagination.items||0;
+      all=all.concat(d.wants||[]);S.progress={ld:all.length,tot:tot,pg:pg,tp:tp};render();
+      pg++;if(pg<=tp)await wait(1100)}
+    S.items=all.map(function(w){var b=w.basic_information||{};return{
+      id:String(b.id||w.id||""),
+      artist:(b.artists||[]).map(function(a){return a.name.replace(/ \(\d+\)$/,"")}).join(", ")||"Unknown",
+      title:b.title||"",label:(b.labels||[])[0]?b.labels[0].name:"",catno:(b.labels||[])[0]?b.labels[0].catno:"",
+      format:(b.formats||[]).map(function(f){return f.name}).join(", "),year:b.year||"",thumb:b.cover_image||b.thumb||""}});
     S.loaded=true
-  }catch(e){S.error=e.message}
-  S.loading=false;S.progress=null;render()
-}
+  }catch(e){S.error=e.message}S.loading=false;S.progress=null;render()}
 
 /* ========== 8MM CHECK VIA CLOUDFLARE WORKER ========== */
-var DIG_MSGS=[
-  "Checking through dusty Kallax furniture\u2026",
-  "Trying not to fall from the ladder\u2026",
-  "Flipping through the jazz section sideways\u2026",
-  "Blowing dust off a rare pressing\u2026",
-  "Squinting at handwritten price stickers\u2026",
-  "Careful, that sleeve is fragile\u2026",
-  "Pretending to know what \u2018first pressing\u2019 means\u2026",
-  "Lost in the world music section\u2026 send help\u2026",
-  "Is that a test pressing?! Oh wait, no\u2026",
-  "Holding a record up to the light to check for warps\u2026",
-  "The bin dividers are lying to me\u2026",
-  "Someone just put on a killer B-side at Fiasco\u2026",
-  "Asking Segurado for a drink\u2026",
-  "Someone just asked Cl\u00e1udio where\u2019s the toilet\u2026"
-];
-var digIdx=Math.floor(Math.random()*DIG_MSGS.length);
-function nextDig(){digIdx=(digIdx+1)%DIG_MSGS.length;return DIG_MSGS[digIdx]}
-function spinSvg(){return '<span class="spinner"><svg width="20" height="20" viewBox="0 0 48 48"><circle cx="24" cy="24" r="22" stroke="#0a7d4f" stroke-width="2" fill="none" opacity=".3"/><circle cx="24" cy="24" r="22" stroke="#0a7d4f" stroke-width="2" fill="none" stroke-dasharray="40 100" stroke-linecap="round"/><circle cx="24" cy="24" r="8" stroke="#0a7d4f" stroke-width="2" fill="none" opacity=".3"/><circle cx="24" cy="24" r="2" fill="#0a7d4f"/></svg></span>'}
 async function checkOne(it){
   var url=surl(it.id,it.artist,it.title);
   var endpoint=WORKER+"?url="+encodeURIComponent(url);
   try{
-    var r=await fetch(endpoint);
-    if(!r.ok){console.log("[8mm] "+it.id+" worker status "+r.status);return "err"}
-    var j=await r.json();
-    if(j.error){console.log("[8mm] "+it.id+" worker error: "+j.error);return "err"}
-    /* Detection: real release pages have a long specific title */
-    if(j.title&&j.title.length>20){
-      var low=j.title.toLowerCase();
-      if(low.indexOf("8mm records")!==0&&low.indexOf("8mm-records")!==0&&low!=="8mm"){
-        console.log("[8mm] FOUND: "+j.title);
-        return "found"
-      }
-    }
-    if(j.hasBasket||j.hasPrice){console.log("[8mm] FOUND (basket/price)");return "found"}
-    console.log("[8mm] Not found: "+it.artist+" - "+it.title+" (title was: '"+j.title+"')");
-    return "no"
-  }catch(e){
-    console.log("[8mm] "+it.id+" fetch error: "+e.message);
-    return "err"
-  }
-}
+    var r=await fetch(endpoint);if(!r.ok)return{s:"err"};
+    var j=await r.json();if(j.error)return{s:"err"};
+    var oos=!!j.oos;
+    if(j.title&&j.title.length>20){var low=j.title.toLowerCase();
+      if(low.indexOf("8mm records")!==0&&low.indexOf("8mm-records")!==0&&low!=="8mm")return{s:"found",oos:oos}}
+    if(j.hasBasket||j.hasPrice)return{s:"found",oos:oos};
+    return{s:"no"}
+  }catch(e){return{s:"err"}}}
 
 async function checkAll(){
-  S.checking=true;S.cabort=false;
-  var tot=S.items.length;
+  S.checking=true;S.cabort=false;var tot=S.items.length;
   S.cprog={done:0,tot:tot,found:0};render();
-
-  /* Rotate digging phrases on a timer, independent of progress */
-  var digTimer=setInterval(function(){
-    var el=document.getElementById("digmsg");
-    if(el)el.textContent=nextDig()
-  },3500);
-
+  var digTimer=setInterval(function(){var el=$("digmsg");if(el)el.textContent=nextDig()},3500);
   var queue=S.items.filter(function(it){return !S.cs[it.id]});
   var done=tot-queue.length;
   while(queue.length>0&&!S.cabort){
     var batch=queue.splice(0,CONCURRENT);
-    var results=await Promise.all(batch.map(function(it){
-      return checkOne(it).then(function(r){return{it:it,r:r}})
-    }));
+    var results=await Promise.all(batch.map(function(it){return checkOne(it).then(function(r){return{it:it,r:r}})}));
     results.forEach(function(o){S.cs[o.it.id]=o.r});
     done+=batch.length;
-    var fc=0;Object.keys(S.cs).forEach(function(k){if(S.cs[k]==="found")fc++});
+    var fc=0;Object.keys(S.cs).forEach(function(k){if(S.cs[k]&&S.cs[k].s==="found")fc++});
     S.cprog={done:done,tot:tot,found:fc};
+    var pt=$("chkprog");if(pt)pt.textContent=done+"/"+tot+" checked ("+fc+" found)";
+    var pf=$("chkfill");if(pf)pf.style.width=(done/Math.max(tot,1)*100)+"%";
+    var st=$("chkstat");if(st)st.querySelector(".stat-n").textContent=fc;
+    if(queue.length>0&&!S.cabort)await wait(200)}
+  clearInterval(digTimer);S.checking=false;render()}
 
-    /* Lightweight DOM update — no full re-render */
-    var ptEl=document.getElementById("chkprog");
-    var pfEl=document.getElementById("chkfill");
-    var stEl=document.getElementById("chkstat");
-    if(ptEl)ptEl.textContent="Checking\u2026 "+done+"/"+tot+" ("+fc+" found)";
-    if(pfEl)pfEl.style.width=(done/Math.max(tot,1)*100)+"%";
-    if(stEl)stEl.querySelector(".stat-n").textContent=fc;
-
-    if(queue.length>0&&!S.cabort)await wait(200)
-  }
-  clearInterval(digTimer);
-  S.checking=false;render()
-}
-
-/* ========== FILTERS ========== */
-function fmts(){
-  var s={};S.items.forEach(function(it){it.format.split(",").forEach(function(f){f=f.trim();if(f)s[f]=true})});
-  return["all"].concat(Object.keys(s)).slice(0,7)
-}
+/* ========== HELPERS ========== */
+function fmts(){var s={};S.items.forEach(function(it){it.format.split(",").forEach(function(f){f=f.trim();if(f)s[f]=(s[f]||0)+1})});
+  var arr=Object.keys(s).sort(function(a,b){return s[b]-s[a]}).slice(0,6);
+  return{list:["all"].concat(arr),counts:s}}
+function fmtClass(f){var l=f.toLowerCase();if(l.indexOf("vinyl")!==-1)return"fmt-vinyl";if(l==="cd")return"fmt-cd";
+  if(l.indexOf("cassette")!==-1)return"fmt-cass";if(l==="file")return"fmt-file";
+  if(l.indexOf("box")!==-1)return"fmt-box";return"fmt-other"}
+function fmtFoundCount(fmt){var c=0;S.items.forEach(function(it){
+  if(fmt!=="all"&&it.format.toLowerCase().indexOf(fmt.toLowerCase())===-1)return;
+  var r=S.cs[it.id];if(r&&r.s==="found")c++});return c}
+function totalFound(){var c=0;Object.keys(S.cs).forEach(function(k){if(S.cs[k]&&S.cs[k].s==="found")c++});return c}
+function hasResults(){return Object.keys(S.cs).length>0}
 function filtered(){
   var q=S.search.toLowerCase(),f=S.format;
   return S.items.filter(function(it){
     var t=(it.artist+" "+it.title+" "+it.label+" "+it.catno).toLowerCase();
-    return(!q||t.indexOf(q)!==-1)&&(f==="all"||it.format.toLowerCase().indexOf(f.toLowerCase())!==-1)&&(!S.onlyFound||S.cs[it.id]==="found")
-  })
-}
+    var r=S.cs[it.id];
+    return(!q||t.indexOf(q)!==-1)&&(f==="all"||it.format.toLowerCase().indexOf(f.toLowerCase())!==-1)&&(!S.onlyFound||r&&r.s==="found")})}
 
 /* ========== RENDER ========== */
 var IG='<svg viewBox="0 0 16 16"><rect x="1" y="1" width="6" height="6" rx="1"/><rect x="9" y="1" width="6" height="6" rx="1"/><rect x="1" y="9" width="6" height="6" rx="1"/><rect x="9" y="9" width="6" height="6" rx="1"/></svg>';
@@ -314,207 +297,131 @@ var IC='<svg viewBox="0 0 16 16"><rect x="1" y="1" width="4" height="4" rx=".5"/
 var IL='<svg viewBox="0 0 16 16"><rect x="1" y="2" width="14" height="3" rx="1"/><rect x="1" y="7" width="14" height="3" rx="1"/><rect x="1" y="12" width="14" height="3" rx="1"/></svg>';
 
 function imgTag(src,sz){
-  if(!src)return '<div class="ph">'+svg(sz||36)+'</div>';
-  return '<img src="'+h(src)+'" alt="" loading="lazy" data-sz="'+(sz||36)+'">'
-}
+  if(!src)return'<div class="ph">'+svg(sz||36)+'</div>';
+  return'<img src="'+h(src)+'" alt="" loading="lazy" data-sz="'+(sz||36)+'" onerror="repImg(this)">'}
+
 function statusHTML(it){
-  var st=S.cs[it.id],su=surl(it.id,it.artist,it.title);
-  if(!st)return'';
-  if(st==="found")return '<div class="it-st"><span class="badge found">\u2713 <a href="'+h(su)+'" target="_blank">Available at 8mm</a></span></div>';
-  if(st==="err")return '<div class="it-st"><span class="badge err">\u26A0 <a href="'+h(su)+'" target="_blank">Check manually</a></span></div>';
-  return '<div class="it-st"><span class="badge notfound">\u2014 Not in store</span></div>'
-}
+  var r=S.cs[it.id];if(!r)return'';
+  var su=surl(it.id,it.artist,it.title);
+  if(r.s==="found"){
+    var cls="badge found"+(r.oos?" oos":"");
+    var label=r.oos?"Out of stock":"Available at 8mm";
+    return'<div class="it-st"><span class="'+cls+'">\u2713 <a href="'+h(su)+'" target="_blank">'+label+'</a>'+(r.oos?' <span class="hint">oos</span>':'')+'</span></div>'}
+  if(r.s==="err")return'<div class="it-st"><span class="badge err">\u26A0 <a href="'+h(su)+'" target="_blank">Check manually</a></span></div>';
+  return'<div class="it-st"><span class="badge notfound">\u2014 Not in store</span></div>'}
+
 function linksHTML(it){
-  var su=surl(it.id,it.artist,it.title),st=S.cs[it.id];
+  var r=S.cs[it.id];
   var o='<div class="it-lks">';
-  if(!st)o+='<a class="it-lnk" href="'+h(su)+'" target="_blank">8mm \u2192</a>';
-  o+='<a class="it-lnk sec" href="https://www.discogs.com/release/'+h(it.id)+'" target="_blank">Discogs</a>';
-  return o+'</div>'
-}
+  if(!r)o+='<a class="it-lnk" href="'+h(surl(it.id,it.artist,it.title))+'" target="_blank">8mm \u2192</a>';
+  o+='<a class="it-lnk" href="https://www.discogs.com/release/'+h(it.id)+'" target="_blank">Discogs</a>';
+  return o+'</div>'}
+
 function renderItem(it){
-  var meta=[it.label,it.year,it.format].filter(Boolean).join(" \u00b7 ");
+  var meta=[it.label,it.year].filter(Boolean).join(" \u00b7 ");
+  var fmt=it.format.split(",")[0].trim();
+  var fmtHtml=fmt?'<span class="fmt-badge '+fmtClass(fmt)+'">'+h(fmt)+'</span>':'';
   var v=S.view;
   if(v==="list"){
-    return '<div class="it"><div class="it-iw">'+imgTag(it.thumb,24)+'</div>'+
+    return'<div class="it"><div class="it-iw">'+imgTag(it.thumb,24)+'</div>'+
       '<div class="it-bd"><div class="it-ar">'+h(it.artist)+'</div><div class="it-ti">'+h(it.title)+'</div>'+
-      '<div class="it-me">'+h(meta)+'</div></div>'+
-      '<div class="it-act">'+statusHTML(it)+linksHTML(it)+'</div></div>'
-  }
-  return '<div class="it"><div class="it-iw">'+imgTag(it.thumb,v==="compact"?28:36)+'</div>'+
+      '<div class="it-me">'+h(meta)+' '+fmtHtml+'</div>'+statusHTML(it)+'</div>'+
+      '<div class="it-act">'+linksHTML(it)+'</div></div>'}
+  return'<div class="it"><div class="it-iw">'+imgTag(it.thumb,v==="compact"?28:36)+'</div>'+
     '<div class="it-bd"><div class="it-ar">'+h(it.artist)+'</div><div class="it-ti">'+h(it.title)+'</div>'+
-    '<div class="it-me">'+h(meta)+'</div>'+statusHTML(it)+linksHTML(it)+'</div></div>'
-}
-function fixImages(){
-  document.querySelectorAll(".it-iw img").forEach(function(img){
-    if(img.complete&&img.naturalWidth===0)repImg(img);
-    else img.addEventListener("error",function(){repImg(img)})
-  })
-}
-function repImg(img){
-  var sz=parseInt(img.getAttribute("data-sz"))||36;
-  var d=document.createElement("div");d.className="ph";d.innerHTML=svg(sz);
-  img.parentNode.replaceChild(d,img)
-}
+    '<div class="it-me">'+h(meta)+' '+fmtHtml+'</div>'+statusHTML(it)+linksHTML(it)+'</div></div>'}
 
 function render(){
   if(!S.loaded&&!S.loading){
     var er=S.error?'<div class="error">'+h(S.error)+'</div>':'';
     root.innerHTML=er+
       '<div class="card"><div class="form-row">'+
-      '<div><label for="iu">Discogs Username</label>'+
-      '<input class="inp" type="text" id="iu" placeholder="your_username" value="'+h(S.user)+'" autocomplete="off" data-1p-ignore data-lpignore="true"></div>'+
-      '<div><label for="it">Personal Access Token</label>'+
-      '<input class="inp" type="text" id="it" placeholder="paste your token here" value="'+h(S.token)+'" autocomplete="off" data-1p-ignore data-lpignore="true" style="-webkit-text-security:disc">'+
+      '<div><label for="iu">Discogs Username</label><input class="inp" type="text" id="iu" placeholder="your_username" value="'+h(S.user)+'" autocomplete="off" data-1p-ignore data-lpignore="true"></div>'+
+      '<div><label for="it">Personal Access Token</label><input class="inp" type="text" id="it" placeholder="paste your token here" value="'+h(S.token)+'" autocomplete="off" data-1p-ignore data-lpignore="true" style="-webkit-text-security:disc">'+
       '<div class="help">Get one at <a href="https://www.discogs.com/settings/developers" target="_blank">discogs.com/settings/developers</a></div></div>'+
       '</div><div class="btn-row"><button class="btn" id="bgo">Fetch My Wantlist</button></div></div>'+
-      '<div class="card howto"><strong>How it works</strong><br>'+
-      '1. Enter your Discogs username and token<br>'+
-      '2. We fetch your wantlist from the Discogs API<br>'+
-      '3. Click \u201CCheck all on 8mm\u201D to scan their catalog<br>'+
-      '4. Found items link directly to the <a href="https://www.8mm-records.com" target="_blank" style="font-weight:600">8mm Records</a> product page'+
-      '<div class="note">Everything runs in your browser. Nothing leaves this page.</div>'+
-      '<div class="token-guide">'+
-        '<button class="token-toggle" id="tgtog">\uD83D\uDD11 <span>How to get your Personal Access Token</span> <span class="arrow" id="tgarr">\u25B6</span></button>'+
-        '<div class="token-steps" id="tgsteps">'+
-          '<div class="tstep"><div class="tstep-n">1</div><div class="tstep-body">'+
-            '<strong>Log in</strong> to your Discogs account at <a href="https://www.discogs.com" target="_blank" style="color:#111;font-weight:600">discogs.com</a>'+
-          '</div></div>'+
-          '<div class="tstep"><div class="tstep-n">2</div><div class="tstep-body">'+
-            'Go to <a href="https://www.discogs.com/settings/developers" target="_blank" style="color:#111;font-weight:600">discogs.com/settings/developers</a>'+
-            '<div class="mock-browser"><div class="mock-bar"><div class="mock-dot"></div><div class="mock-dot"></div><div class="mock-dot"></div><div class="mock-url">discogs.com/settings/developers</div></div>'+
-            '<div class="mock-body" style="text-align:center"><div style="background:#111;color:#fff;display:inline-block;padding:8px 20px;border-radius:6px;font-weight:600;font-size:11px;cursor:default">Generate new token</div></div></div>'+
-          '</div></div>'+
-          '<div class="tstep"><div class="tstep-n">3</div><div class="tstep-body">'+
-            'Click <strong>\u201CGenerate new token\u201D</strong>. Discogs will create a string that looks like:<br>'+
-            '<code style="margin-top:6px;display:inline-block">AbCdEfGhIjKlMnOpQrStUvWxYz</code>'+
-          '</div></div>'+
-          '<div class="tstep"><div class="tstep-n">4</div><div class="tstep-body">'+
-            '<strong>Copy</strong> the token and <strong>paste it</strong> into the field above. That\u2019s it!<br>'+
-            '<span style="font-size:11px;color:#999;margin-top:4px;display:inline-block">The token only gives read access to your public profile and wantlist. It cannot modify anything.</span>'+
-          '</div></div>'+
-        '</div>'+
-      '</div>'+
-      '<div class="priv-note">\uD83D\uDD12 <strong style="color:#999">Privacy:</strong> This tool runs entirely in your browser. Your Discogs token is stored only in your session and erased when you close the tab. Your wantlist is fetched directly from Discogs \u2014 we never see or store it. The 8mm check uses a lightweight proxy that only forwards requests to 8mm-records.com and keeps no logs. No cookies, no analytics, no tracking.</div>'+
-      '</div>'
-        '<button class="token-toggle" id="tgtog">\uD83D\uDD11 <span>How to get your Personal Access Token</span> <span class="arrow" id="tgarr">\u25B6</span></button>'+
-        '<div class="token-steps" id="tgsteps">'+
-          '<div class="tstep"><div class="tstep-n">1</div><div class="tstep-body">'+
-            '<strong>Log in</strong> to your Discogs account at <a href="https://www.discogs.com" target="_blank" style="color:#111;font-weight:600">discogs.com</a>'+
-          '</div></div>'+
-          '<div class="tstep"><div class="tstep-n">2</div><div class="tstep-body">'+
-            'Go to <a href="https://www.discogs.com/settings/developers" target="_blank" style="color:#111;font-weight:600">discogs.com/settings/developers</a>'+
-            '<div class="mock-browser"><div class="mock-bar"><div class="mock-dot"></div><div class="mock-dot"></div><div class="mock-dot"></div><div class="mock-url">discogs.com/settings/developers</div></div>'+
-            '<div class="mock-body" style="text-align:center"><div style="background:#111;color:#fff;display:inline-block;padding:8px 20px;border-radius:6px;font-weight:600;font-size:11px;cursor:default">Generate new token</div></div></div>'+
-          '</div></div>'+
-          '<div class="tstep"><div class="tstep-n">3</div><div class="tstep-body">'+
-            'Click <strong>\u201CGenerate new token\u201D</strong>. Discogs will create a string that looks like:<br>'+
-            '<code style="margin-top:6px;display:inline-block">AbCdEfGhIjKlMnOpQrStUvWxYz</code>'+
-          '</div></div>'+
-          '<div class="tstep"><div class="tstep-n">4</div><div class="tstep-body">'+
-            '<strong>Copy</strong> the token and <strong>paste it</strong> into the field above. That\u2019s it!<br>'+
-            '<span style="font-size:11px;color:#999;margin-top:4px;display:inline-block">The token only gives read access to your public profile and wantlist. It cannot modify anything.</span>'+
-          '</div></div>'+
-        '</div>'+
-      '</div>'+
-      '<div class="priv">'+
-        '<button class="priv-toggle" id="prvtog">\uD83D\uDD12 Your privacy <span class="arrow" id="prvarr">\u25B6</span></button>'+
-        '<div class="priv-body" id="prvbody">'+
-          '<div class="priv-lang" id="prvlang">'+
-            '<button class="on" data-l="en">English</button>'+
-            '<button data-l="pt">Portugu\u00eas</button>'+
-            '<button data-l="es">Espa\u00f1ol</button>'+
-            '<button data-l="fr">Fran\u00e7ais</button>'+
-            '<button data-l="de">Deutsch</button>'+
-            '<button data-l="ja">\u65E5\u672C\u8A9E</button>'+
-          '</div>'+
-          '<div id="prvtext"></div>'+
-        '</div>'+
-      '</div>'+
+      '<div class="card howto"><strong>How it works</strong><br>1. Enter your Discogs username and token<br>2. We fetch your wantlist from the Discogs API<br>3. Click \u201CCheck all on 8mm\u201D to scan their catalog<br>4. Found items link directly to the <a href="https://www.8mm-records.com" target="_blank" style="font-weight:600">8mm Records</a> product page'+
+      '<div class="token-guide"><button class="token-toggle" id="tgtog">\uD83D\uDD11 <span>How to get your Personal Access Token</span> <span class="arrow" id="tgarr">\u25B6</span></button>'+
+      '<div class="token-steps" id="tgsteps">'+
+      '<div class="tstep"><div class="tstep-n">1</div><div class="tstep-body"><strong>Log in</strong> to your Discogs account at <a href="https://www.discogs.com" target="_blank" style="color:var(--acc);font-weight:600">discogs.com</a></div></div>'+
+      '<div class="tstep"><div class="tstep-n">2</div><div class="tstep-body">Go to <a href="https://www.discogs.com/settings/developers" target="_blank" style="color:var(--acc);font-weight:600">discogs.com/settings/developers</a>'+
+      '<div class="mock-browser"><div class="mock-bar"><div class="mock-dot"></div><div class="mock-dot"></div><div class="mock-dot"></div><div class="mock-url">discogs.com/settings/developers</div></div>'+
+      '<div class="mock-body" style="text-align:center"><div style="background:var(--acc);color:var(--bg);display:inline-block;padding:8px 20px;border-radius:6px;font-weight:600;font-size:11px;cursor:default">Generate new token</div></div></div></div></div>'+
+      '<div class="tstep"><div class="tstep-n">3</div><div class="tstep-body">Click <strong>\u201CGenerate new token\u201D</strong>. Discogs will create a string like:<br><code style="margin-top:6px;display:inline-block">AbCdEfGhIjKlMnOpQrStUvWxYz</code></div></div>'+
+      '<div class="tstep"><div class="tstep-n">4</div><div class="tstep-body"><strong>Copy</strong> the token and <strong>paste it</strong> into the field above. That\u2019s it!<br><span style="font-size:11px;color:var(--tx3);margin-top:4px;display:inline-block">The token only gives read access to your public profile and wantlist.</span></div></div>'+
+      '</div></div>'+
+      '<div class="priv-note">\uD83D\uDD12 <strong style="color:var(--tx3)">Privacy:</strong> This tool runs entirely in your browser. Your token is stored only in your session and erased when you close the tab. Your wantlist is fetched directly from Discogs. The 8mm check uses a lightweight proxy that keeps no logs. No cookies, no analytics, no tracking.</div>'+
       '</div>';
-    $("bgo").addEventListener("click",function(){
-      S.user=$("iu").value.trim();S.token=$("it").value.trim();saveCreds();
-      if(S.user)fetchWL()
-    });
+    $("bgo").addEventListener("click",function(){S.user=$("iu").value.trim();S.token=$("it").value.trim();saveCreds();if(S.user)fetchWL()});
     $("iu").addEventListener("keydown",function(e){if(e.key==="Enter")$("bgo").click()});
     $("it").addEventListener("keydown",function(e){if(e.key==="Enter")$("bgo").click()});
-    $("tgtog").addEventListener("click",function(){
-      var steps=$("tgsteps"),arr=$("tgarr");
-      var open=steps.classList.toggle("show");
-      arr.classList.toggle("open",open)
-    });
-    return
-  }
+    $("tgtog").addEventListener("click",function(){$("tgsteps").classList.toggle("show");$("tgarr").classList.toggle("open")});
+    return}
   if(S.loading){
     var p=S.progress;
-    var ph=p?'<div class="progress-text">Loaded '+p.ld+' of '+p.tot+' items (page '+p.pg+'/'+p.tp+')</div>'+
-      '<div class="pbar" style="max-width:300px;margin:8px auto 0"><div class="pfill pfill-dark" style="width:'+(p.ld/Math.max(p.tot,1)*100)+'%"></div></div>'
-      :'<div class="progress-text">Connecting to Discogs\u2026</div>';
-    root.innerHTML='<div class="card" style="text-align:center;padding:40px"><div style="font-size:16px;font-weight:700;margin-bottom:12px">Fetching your wantlist\u2026</div>'+ph+'</div>';
-    return
-  }
+    root.innerHTML='<div class="card" style="text-align:center;padding:40px"><div style="font-size:16px;font-weight:700;margin-bottom:12px">Fetching your wantlist\u2026</div>'+
+      (p?'<div class="progress-text">Loaded '+p.ld+' of '+p.tot+' items (page '+p.pg+'/'+p.tp+')</div><div class="pbar" style="max-width:300px;margin:8px auto 0"><div class="pfill pfill-dark" style="width:'+(p.ld/Math.max(p.tot,1)*100)+'%"></div></div>':'<div class="progress-text">Connecting to Discogs\u2026</div>')+'</div>';return}
   if(S.loaded&&S.items.length===0){
-    root.innerHTML='<div class="card empty"><div style="font-size:18px;font-weight:700;margin-bottom:8px">Wantlist is empty</div><div>No items found, or the wantlist is set to private.</div><button class="btn-sec" style="margin-top:16px" id="bb">\u2190 Back</button></div>';
-    $("bb").addEventListener("click",function(){S.loaded=false;render()});
-    return
-  }
+    root.innerHTML='<div class="card empty"><div style="font-size:18px;font-weight:700;margin-bottom:8px">Wantlist is empty</div><button class="btn-sec" style="margin-top:16px" id="bb">\u2190 Back</button></div>';
+    $("bb").addEventListener("click",function(){S.loaded=false;render()});return}
 
-  var fl=filtered(),fm=fmts(),sh=fl.slice(0,S.vis),more=sh.length<fl.length;
-  var artc={},fc=0;
-  S.items.forEach(function(i){artc[i.artist]=true});
-  Object.keys(S.cs).forEach(function(k){if(S.cs[k]==="found")fc++});
-  var hc=Object.keys(S.cs).length>0;
+  var fl=filtered(),sh=fl.slice(0,S.vis),more=sh.length<fl.length;
+  var artc={};S.items.forEach(function(i){artc[i.artist]=true});
+  var tf=totalFound(),hc=hasResults();
+  var fmtData=fmts(),fmList=fmtData.list,fmCounts=fmtData.counts;
   var o='';
 
-  o+='<div class="top-bar"><div style="font-size:13px;color:#666">Loaded <strong>'+S.items.length+'</strong> items for <strong>'+h(S.user)+'</strong></div>'+
-    '<div style="display:flex;gap:8px"><button class="btn-sec btn-sm" id="brl">\u21BB Refresh</button>'+
-    '<button class="btn-sec btn-sm" id="brs">Logout</button></div></div>';
+  o+='<div class="top-bar"><div style="font-size:13px;color:var(--tx2)">Loaded <strong>'+S.items.length+'</strong> items for <strong>'+h(S.user)+'</strong></div>'+
+    '<div style="display:flex;gap:8px"><button class="btn-sec btn-sm" id="brl">\u21BB Refresh</button><button class="btn-sec btn-sm" id="brs">Logout</button></div></div>';
 
   o+='<div class="stats"><div class="stat"><div class="stat-n">'+S.items.length+'</div><div class="stat-l">Wantlist</div></div>'+
     '<div class="stat"><div class="stat-n">'+Object.keys(artc).length+'</div><div class="stat-l">Artists</div></div>';
-  if(hc)o+='<div class="stat" id="chkstat"><div class="stat-n green">'+fc+'</div><div class="stat-l">Found at 8mm</div></div>';
+  if(hc)o+='<div class="stat" id="chkstat"><div class="stat-n green">'+tf+'</div><div class="stat-l">Found at 8mm</div></div>';
   o+='</div>';
 
   o+='<div class="check-bar">';
   if(!S.checking){
     o+='<button class="btn-green" id="bch">'+(hc?'\u21BB Re-check on 8mm':'\u2713 Check all on 8mm')+'</button>';
-    if(hc&&fc>0)o+='<button class="fbtn'+(S.onlyFound?' on':'')+'" id="btf">Only available ('+fc+')</button>'
-  }else{
+    if(hc&&tf>0)o+='<button class="fbtn'+(S.onlyFound?' on':'')+'" id="btf">Only available <span class="fc"><span>'+tf+'</span></span></button>'}
+  else{
     var cp=S.cprog||{done:0,tot:S.items.length,found:0};
-    o+='<button class="btn-sec btn-sm" id="bst">\u25A0 Stop</button>'+
-      spinSvg()+
-      '<div class="pw"><div class="progress-text" id="chkprog">Checking\u2026 '+cp.done+'/'+cp.tot+' ('+cp.found+' found)</div>'+
+    o+='<button class="btn-sec btn-sm" id="bst">\u25A0 Stop</button>'+spinSvg()+
+      '<div class="pw"><div class="progress-text" id="chkprog">'+cp.done+'/'+cp.tot+' checked ('+cp.found+' found)</div>'+
       '<div class="pbar"><div class="pfill pfill-green" id="chkfill" style="width:'+(cp.done/Math.max(cp.tot,1)*100)+'%"></div></div>'+
-      '<div class="dig-msg" id="digmsg">'+h(DIG_MSGS[digIdx])+'</div></div>'
-  }
+      '<div class="dig-msg" id="digmsg">'+h(DIG_MSGS[digIdx])+'</div></div>'}
   o+='</div>';
 
-  o+='<div class="toolbar"><input class="search" id="isrch" placeholder="Search artist, title, label\u2026" value="'+h(S.search)+'" autocomplete="off" data-1p-ignore data-lpignore="true">';
-  fm.forEach(function(f){o+='<button class="fbtn'+(S.format===f?' on':'')+'" data-f="'+h(f)+'">'+(f==="all"?"All":h(f))+'</button>'});
-  o+='<div class="vtog">'+
-    '<button class="vb'+(S.view==="grid"?' on':'')+'" data-v="grid" title="Grid">'+IG+'</button>'+
+  /* Toolbar */
+  o+='<div class="toolbar"><input class="search" id="isrch" placeholder="Search artist, title, label\u2026" value="'+h(S.search)+'" autocomplete="off" data-1p-ignore data-lpignore="true">'+
+    '<div class="vtog"><button class="vb'+(S.view==="grid"?' on':'')+'" data-v="grid" title="Grid">'+IG+'</button>'+
     '<button class="vb'+(S.view==="compact"?' on':'')+'" data-v="compact" title="Compact">'+IC+'</button>'+
     '<button class="vb'+(S.view==="list"?' on':'')+'" data-v="list" title="List">'+IL+'</button></div></div>';
 
-  o+='<div class="v-'+S.view+'">';
-  sh.forEach(function(it){o+=renderItem(it)});
+  /* Format filters */
+  o+='<div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:16px">';
+  fmList.forEach(function(f){
+    var cnt=f==="all"?S.items.length:(fmCounts[f]||0);
+    var fc=hc?fmtFoundCount(f):0;
+    o+='<button class="fbtn'+(S.format===f?' on':'')+'" data-f="'+h(f)+'">'+(f==="all"?"All":h(f))+' <span class="fc">'+cnt;
+    if(fc>0)o+=' &middot; <span>'+fc+' found</span>';
+    o+='</span></button>'});
   o+='</div>';
+
+  o+='<div class="v-'+S.view+'">';sh.forEach(function(it){o+=renderItem(it)});o+='</div>';
   if(more)o+='<div class="more"><button class="btn-sec" id="bmo">Show more ('+(fl.length-sh.length)+' remaining)</button></div>';
   if(fl.length===0)o+='<div class="empty">No items match your filters.</div>';
 
   root.innerHTML=o;
-  fixImages();
 
-  $("brs").addEventListener("click",function(){S.loaded=false;S.items=[];S.error=null;S.search="";S.format="all";S.vis=PER_PAGE;S.cs={};S.checking=false;S.onlyFound=false;render()});
+  $("brs").addEventListener("click",function(){S.loaded=false;S.items=[];S.error=null;S.cs={};render()});
   $("brl").addEventListener("click",function(){if(S.user)fetchWL()});
-  var isrch=$("isrch");
-  if(isrch)isrch.addEventListener("input",function(e){S.search=e.target.value;S.vis=PER_PAGE;render();var el=$("isrch");if(el){el.focus();el.setSelectionRange(el.value.length,el.value.length)}});
+  var isrch=$("isrch");if(isrch)isrch.addEventListener("input",function(e){S.search=e.target.value;S.vis=PER_PAGE;render();var el=$("isrch");if(el){el.focus();el.setSelectionRange(el.value.length,el.value.length)}});
   document.querySelectorAll("[data-f]").forEach(function(b){b.addEventListener("click",function(){S.format=b.getAttribute("data-f");S.vis=PER_PAGE;render()})});
   document.querySelectorAll("[data-v]").forEach(function(b){b.addEventListener("click",function(){S.view=b.getAttribute("data-v");render()})});
   var bmo=$("bmo");if(bmo)bmo.addEventListener("click",function(){S.vis+=PER_PAGE;render()});
   var bch=$("bch");if(bch)bch.addEventListener("click",function(){S.cs={};checkAll()});
   var bst=$("bst");if(bst)bst.addEventListener("click",function(){S.cabort=true});
-  var btf=$("btf");if(btf)btf.addEventListener("click",function(){S.onlyFound=!S.onlyFound;S.vis=PER_PAGE;render()})
-}
+  var btf=$("btf");if(btf)btf.addEventListener("click",function(){S.onlyFound=!S.onlyFound;S.vis=PER_PAGE;render()})}
 
 render()
 })();
