@@ -173,7 +173,7 @@ label{display:block;font-size:13px;font-weight:600;color:var(--tx);margin-bottom
   <div class="header">
     <div class="logo">8mm Records <span>&times;</span> Discogs</div>
     <div class="sub">Check which records from your wantlist are available at 8mm Records</div>
-    <div class="ver">v4.0 &mdash; 2026-03-15</div>
+    <div class="ver">v4.1 &mdash; 2026-03-16</div>
   </div>
   <div id="root"></div>
 </div>
@@ -313,23 +313,20 @@ function statusHTML(it){
 function linksHTML(it){
   var r=S.cs[it.id];
   var o='<div class="it-lks">';
-  if(!r)o+='<a class="it-lnk" href="'+h(surl(it.id,it.artist,it.title))+'" target="_blank">8mm \u2192</a>';
   o+='<a class="it-lnk" href="https://www.discogs.com/release/'+h(it.id)+'" target="_blank">Discogs</a>';
   return o+'</div>'}
 
 function renderItem(it){
-  var meta=[it.label,it.year].filter(Boolean).join(" \u00b7 ");
-  var fmt=it.format.split(",")[0].trim();
-  var fmtHtml=fmt?'<span class="fmt-badge '+fmtClass(fmt)+'">'+h(fmt)+'</span>':'';
+  var meta=[it.label,it.year,it.format.split(",")[0].trim()].filter(Boolean).join(" \u00b7 ");
   var v=S.view;
   if(v==="list"){
     return'<div class="it"><div class="it-iw">'+imgTag(it.thumb,24)+'</div>'+
       '<div class="it-bd"><div class="it-ar">'+h(it.artist)+'</div><div class="it-ti">'+h(it.title)+'</div>'+
-      '<div class="it-me">'+h(meta)+' '+fmtHtml+'</div>'+statusHTML(it)+'</div>'+
+      '<div class="it-me">'+h(meta)+'</div>'+statusHTML(it)+'</div>'+
       '<div class="it-act">'+linksHTML(it)+'</div></div>'}
   return'<div class="it"><div class="it-iw">'+imgTag(it.thumb,v==="compact"?28:36)+'</div>'+
     '<div class="it-bd"><div class="it-ar">'+h(it.artist)+'</div><div class="it-ti">'+h(it.title)+'</div>'+
-    '<div class="it-me">'+h(meta)+' '+fmtHtml+'</div>'+statusHTML(it)+linksHTML(it)+'</div></div>'}
+    '<div class="it-me">'+h(meta)+'</div>'+statusHTML(it)+linksHTML(it)+'</div></div>'}
 
 function render(){
   if(!S.loaded&&!S.loading){
